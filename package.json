@@ -1,0 +1,19 @@
+{
+  "name": "bands-in-town",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "test",
+    "dev": "parcel src/index.html --log-level 3 --open"
+  },
+  "author": "Marcus Guthrie",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.5.2",
+    "react-dom": "^16.5.2"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.10.2"
+  }
+}
