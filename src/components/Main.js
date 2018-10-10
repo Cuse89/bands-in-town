@@ -7,16 +7,32 @@ class Main extends React.Component {
         super(props)
 
         this.state = {
-    
+            
+            
         }
 
-        this.submitForm = this.submitForm.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+        this.getData = this.getData.bind(this)
 
     }
 
-    submitForm(value) {
-        console.log('submit form - ', value)
+    handleSubmit(artist) {
+        this.getData('artist', `https://rest.bandsintown.com/artists/${artist}?app_id=c19ad5df9483acf93813b4275bb6d69b`)
+        this.getData('event', `https://rest.bandsintown.com/artists/${artist}/events?app_id=c19ad5df9483acf93813b4275bb6d69b&date=upcoming`)
+    }
 
+    getData(infoType, url) {
+        const Http = new XMLHttpRequest();
+        Http.open("GET", url);
+        Http.send();
+        Http.onreadystatechange = () => {
+            this.sortResponse(infoType, Http.responseText)
+            console.log(Http.responseText)
+        }
+    }
+
+    sortResponse(response) {
+        
     }
 
     render() {
@@ -24,9 +40,8 @@ class Main extends React.Component {
             <div>
                 <Header/>
                 <SearchForm
-                    submitForm = {this.submitForm}
+                    handleSubmit = {this.handleSubmit}
                 />
-                Main
             </div>
         )
     }

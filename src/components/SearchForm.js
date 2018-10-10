@@ -21,7 +21,7 @@ class SearchForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault()
-        this.props.submitForm(this.state.value)
+        this.props.handleSubmit(this.state.value)
     }
         
     render() {

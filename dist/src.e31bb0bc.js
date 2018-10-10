@@ -22169,7 +22169,7 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
-      this.props.submitForm(this.state.value);
+      this.props.handleSubmit(this.state.value);
     }
   }, {
     key: "render",
@@ -22256,21 +22256,41 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
     _this.state = {};
-    _this.submitForm = _this.submitForm.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.getData = _this.getData.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(Main, [{
-    key: "submitForm",
-    value: function submitForm(value) {
-      console.log('submit form - ', value);
+    key: "handleSubmit",
+    value: function handleSubmit(artist) {
+      this.getData('artist', "https://rest.bandsintown.com/artists/".concat(artist, "?app_id=c19ad5df9483acf93813b4275bb6d69b"));
+      this.getData('event', "https://rest.bandsintown.com/artists/".concat(artist, "/events?app_id=c19ad5df9483acf93813b4275bb6d69b&date=upcoming"));
     }
+  }, {
+    key: "getData",
+    value: function getData(infoType, url) {
+      var _this2 = this;
+
+      var Http = new XMLHttpRequest();
+      Http.open("GET", url);
+      Http.send();
+
+      Http.onreadystatechange = function () {
+        _this2.sortResponse(infoType, Http.responseText);
+
+        console.log(Http.responseText);
+      };
+    }
+  }, {
+    key: "sortResponse",
+    value: function sortResponse(response) {}
   }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement(_SearchForm.default, {
-        submitForm: this.submitForm
-      }), "Main");
+        handleSubmit: this.handleSubmit
+      }));
     }
   }]);
 
@@ -22322,7 +22342,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64605" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54956" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
