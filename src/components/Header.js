@@ -1,5 +1,5 @@
-import React from 'react'
-import SearchForm from './SearchForm'
+import React from 'react';
+import SearchForm from './SearchForm';
 
 const Header = (props) => (
     <header>
@@ -9,4 +9,4 @@ const Header = (props) => (
         }
     </header>
 );
-export default Header
+export default Header;

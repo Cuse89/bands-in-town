@@ -22210,7 +22210,30 @@ var Header = function Header(props) {
 
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./SearchForm":"components/SearchForm.js"}],"components/Main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./SearchForm":"components/SearchForm.js"}],"components/BandInfo.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BandInfo = function BandInfo(props) {
+  return _react.default.createElement("div", null, _react.default.createElement("img", {
+    src: props.image
+  }), _react.default.createElement("h3", null, props.artistName), _react.default.createElement("a", {
+    href: props.fbUrl,
+    target: "_blank"
+  }, "Facebook"));
+};
+
+var _default = BandInfo;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"components/Main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22223,6 +22246,8 @@ var _react = _interopRequireDefault(require("react"));
 var _Header = _interopRequireDefault(require("./Header"));
 
 var _SearchForm = _interopRequireDefault(require("./SearchForm"));
+
+var _BandInfo = _interopRequireDefault(require("./BandInfo"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22255,9 +22280,15 @@ function (_React$Component) {
     _classCallCheck(this, Main);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
-    _this.state = {};
+    _this.state = {
+      artistInfo: {},
+      eventInfo: {}
+    };
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.getData = _this.getData.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.sortArtistInfo = _this.sortArtistInfo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.sortEventInfo = _this.sortEventInfo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleResponses = _this.handleResponses.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -22270,26 +22301,76 @@ function (_React$Component) {
   }, {
     key: "getData",
     value: function getData(infoType, url) {
-      var _this2 = this;
-
+      var self = this;
       var Http = new XMLHttpRequest();
-      Http.open("GET", url);
-      Http.send();
 
       Http.onreadystatechange = function () {
-        _this2.sortResponse(infoType, Http.responseText);
-
-        console.log(Http.responseText);
+        if (this.readyState == 4 && this.status == 200) {
+          self.handleResponses(infoType, Http.responseText);
+        }
       };
+
+      Http.open('GET', url);
+      Http.send();
     }
   }, {
-    key: "sortResponse",
-    value: function sortResponse(response) {}
+    key: "handleResponses",
+    value: function handleResponses(infoType, response) {
+      var info = JSON.parse(response);
+
+      switch (infoType) {
+        case 'artist':
+          this.sortArtistInfo(info);
+          break;
+
+        case 'event':
+          this.sortEventInfo(info);
+          break;
+
+        default:
+          return null;
+      }
+    }
+  }, {
+    key: "sortArtistInfo",
+    value: function sortArtistInfo(info) {
+      this.setState({
+        artistInfo: {
+          name: info.name,
+          image: {
+            large: info.image_url,
+            thumb: info.thumb_url
+          },
+          fbUrl: info.facebook_page_url
+        }
+      });
+    }
+  }, {
+    key: "sortEventInfo",
+    value: function sortEventInfo(infos) {
+      var events = [];
+      infos.map(function (event) {
+        events.push({
+          onSaleDateTime: event.on_sale_datetime,
+          dateTime: event.datetime,
+          description: event.description,
+          venue: event.venue,
+          offers: event.offers
+        });
+      });
+      this.setState({
+        eventInfo: events
+      });
+    }
   }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement(_SearchForm.default, {
         handleSubmit: this.handleSubmit
+      }), this.state.artistInfo.name && _react.default.createElement(_BandInfo.default, {
+        image: this.state.artistInfo.image.thumb,
+        artistName: this.state.artistInfo.name,
+        fbUrl: this.state.artistInfo.fbUrl
       }));
     }
   }]);
@@ -22299,7 +22380,7 @@ function (_React$Component) {
 
 var _default = Main;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./SearchForm":"components/SearchForm.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./SearchForm":"components/SearchForm.js","./BandInfo":"components/BandInfo.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -22342,7 +22423,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54956" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50252" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

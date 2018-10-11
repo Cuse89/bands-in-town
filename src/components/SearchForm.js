@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 class SearchForm extends React.Component {
     constructor(props) {
@@ -8,8 +8,8 @@ class SearchForm extends React.Component {
             value : ""    
         }
 
-        this.handleChange = this.handleChange.bind(this)
-        this.handleSubmit = this.handleSubmit.bind(this)
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
 
@@ -20,18 +20,18 @@ class SearchForm extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault()
-        this.props.handleSubmit(this.state.value)
+        e.preventDefault();
+        this.props.handleSubmit(this.state.value);
     }
         
     render() {
         return (
             <form>
                 <input
-                    type = "text"
+                    type = 'text'
                     value = {this.state.value}
                     onChange = {this.handleChange}
-                    placeholder = "Search Artists..."                                  
+                    placeholder = 'Search Artists...'                                  
                 />
                 <button
                     onClick = {this.handleSubmit}
@@ -45,4 +45,4 @@ class SearchForm extends React.Component {
     }
 }
 
-export default SearchForm
+export default SearchForm;
