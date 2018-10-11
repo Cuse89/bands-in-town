@@ -22210,7 +22210,7 @@ var Header = function Header(props) {
 
 var _default = Header;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./SearchForm":"components/SearchForm.js"}],"components/BandInfo.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./SearchForm":"components/SearchForm.js"}],"components/ArtistInfo.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22222,7 +22222,7 @@ var _react = _interopRequireDefault(require("react"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var BandInfo = function BandInfo(props) {
+var ArtistInfo = function ArtistInfo(props) {
   return _react.default.createElement("div", null, _react.default.createElement("img", {
     src: props.image
   }), _react.default.createElement("h3", null, props.artistName), _react.default.createElement("a", {
@@ -22231,9 +22231,110 @@ var BandInfo = function BandInfo(props) {
   }, "Facebook"));
 };
 
-var _default = BandInfo;
+var _default = ArtistInfo;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"components/Main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"components/TicketButton.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TicketButton = function TicketButton(props) {
+  return _react.default.createElement(_react.default.Fragment, null, props.status == "No Tickets" ? _react.default.createElement("p", null, "No Tickets") : _react.default.createElement("button", null, props.status));
+};
+
+var _default = TicketButton;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js"}],"components/ArtistEvent.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _TicketButton = _interopRequireDefault(require("./TicketButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var ArtistEvent =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(ArtistEvent, _React$Component);
+
+  function ArtistEvent(props) {
+    var _this;
+
+    _classCallCheck(this, ArtistEvent);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArtistEvent).call(this, props));
+    _this.state = {
+      ticketStatus: _this.getStatus()
+    };
+    return _this;
+  }
+
+  _createClass(ArtistEvent, [{
+    key: "getStatus",
+    value: function getStatus() {
+      var status = "No Tickets";
+      this.props.info.offers.forEach(function (offer) {
+        switch (offer.type) {
+          case 'Presale':
+            status = "Buy Presale Tickets";
+            break;
+
+          case 'Tickets':
+            status = "Buy Tickets";
+            break;
+
+          default:
+            status = "No Tickets";
+        }
+      });
+      return status;
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, this.props.info.venue.name, " - -", this.props.info.venue.city, ", ", this.props.info.venue.country, _react.default.createElement(_TicketButton.default, {
+        status: this.state.ticketStatus
+      }));
+    }
+  }]);
+
+  return ArtistEvent;
+}(_react.default.Component);
+
+var _default = ArtistEvent;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./TicketButton":"components/TicketButton.js"}],"components/Main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -22247,7 +22348,9 @@ var _Header = _interopRequireDefault(require("./Header"));
 
 var _SearchForm = _interopRequireDefault(require("./SearchForm"));
 
-var _BandInfo = _interopRequireDefault(require("./BandInfo"));
+var _ArtistInfo = _interopRequireDefault(require("./ArtistInfo"));
+
+var _ArtistEvent = _interopRequireDefault(require("./ArtistEvent"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22282,13 +22385,13 @@ function (_React$Component) {
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
     _this.state = {
       artistInfo: {},
-      eventInfo: {}
+      artistEvents: []
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.getData = _this.getData.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.sortArtistInfo = _this.sortArtistInfo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.sortEventInfo = _this.sortEventInfo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleResponses = _this.handleResponses.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this))); // this.getData = this.getData.bind(this);
+    // this.sortArtistInfo = this.sortArtistInfo.bind(this);
+    // this.sortEventInfo = this.sortEventInfo.bind(this);
+    // this.handleResponses = this.handleResponses.bind(this);
+
     return _this;
   }
 
@@ -22358,8 +22461,9 @@ function (_React$Component) {
           offers: event.offers
         });
       });
+      console.log(events);
       this.setState({
-        eventInfo: events
+        artistEvents: events
       });
     }
   }, {
@@ -22367,10 +22471,15 @@ function (_React$Component) {
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement(_SearchForm.default, {
         handleSubmit: this.handleSubmit
-      }), this.state.artistInfo.name && _react.default.createElement(_BandInfo.default, {
+      }), this.state.artistInfo.name && _react.default.createElement(_ArtistInfo.default, {
         image: this.state.artistInfo.image.thumb,
         artistName: this.state.artistInfo.name,
         fbUrl: this.state.artistInfo.fbUrl
+      }), this.state.artistEvents.length > 0 && this.state.artistEvents.map(function (event, i) {
+        return _react.default.createElement(_ArtistEvent.default, {
+          key: i,
+          info: event
+        });
       }));
     }
   }]);
@@ -22380,7 +22489,7 @@ function (_React$Component) {
 
 var _default = Main;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./SearchForm":"components/SearchForm.js","./BandInfo":"components/BandInfo.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./SearchForm":"components/SearchForm.js","./ArtistInfo":"components/ArtistInfo.js","./ArtistEvent":"components/ArtistEvent.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));

@@ -1,7 +1,8 @@
 import React from 'react';
 import Header from './Header';
 import SearchForm from './SearchForm';
-import BandInfo from './BandInfo';
+import ArtistInfo from './ArtistInfo';
+import ArtistEvent from './ArtistEvent';
 
 class Main extends React.Component {
     constructor(props) {
@@ -9,14 +10,14 @@ class Main extends React.Component {
 
         this.state = {
             artistInfo: {},
-            eventInfo: {}
+            artistEvents: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.getData = this.getData.bind(this);
-        this.sortArtistInfo = this.sortArtistInfo.bind(this);
-        this.sortEventInfo = this.sortEventInfo.bind(this);
-        this.handleResponses = this.handleResponses.bind(this);
+        // this.getData = this.getData.bind(this);
+        // this.sortArtistInfo = this.sortArtistInfo.bind(this);
+        // this.sortEventInfo = this.sortEventInfo.bind(this);
+        // this.handleResponses = this.handleResponses.bind(this);
 
     }
 
@@ -75,9 +76,9 @@ class Main extends React.Component {
                 offers: event.offers
             })            
         })
-
+console.log(events)
         this.setState({
-            eventInfo: events
+            artistEvents: events
         })
         
     }
@@ -91,11 +92,20 @@ class Main extends React.Component {
                 />
                 {
                     this.state.artistInfo.name && 
-                    <BandInfo
+                    <ArtistInfo
                         image = {this.state.artistInfo.image.thumb}
                         artistName = {this.state.artistInfo.name}
                         fbUrl = {this.state.artistInfo.fbUrl}
                     />
+                }
+                {
+                    this.state.artistEvents.length > 0 &&
+                        this.state.artistEvents.map((event, i) => {
+                        return <ArtistEvent
+                            key = {i}
+                            info = {event}                    
+                        />
+                    })                    
                 }
             </div>
         )
