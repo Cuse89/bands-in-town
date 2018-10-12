@@ -32333,7 +32333,7 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(ArtistInfo).call(this, props));
     _this.state = {
-      followed: _this.props.isArtistFollowed()
+      followed: _this.props.isArtistFollowed() ? true : false
     };
     _this.handleHeartClick = _this.handleHeartClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
@@ -32344,7 +32344,7 @@ function (_React$Component) {
     value: function componentWillReceiveProps(prevProps) {
       if (prevProps.artistName != this.props.artistName) {
         this.setState({
-          followed: this.props.isArtistFollowed
+          followed: this.props.isArtistFollowed() ? true : false
         });
       }
     }

@@ -7,7 +7,7 @@ class ArtistInfo extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            followed: this.props.isArtistFollowed(),
+            followed: this.props.isArtistFollowed() ? true : false,
         }
 
         this.handleHeartClick = this.handleHeartClick.bind(this);
@@ -16,7 +16,7 @@ class ArtistInfo extends React.Component {
     componentWillReceiveProps(prevProps) {
         if (prevProps.artistName != this.props.artistName) {
             this.setState({
-                followed: this.props.isArtistFollowed
+                followed: this.props.isArtistFollowed() ? true : false
             })
         }
     }
