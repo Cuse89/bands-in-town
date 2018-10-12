@@ -1,6 +1,4 @@
 import React from 'react';
-import { faHeart as regHeart } from '@fortawesome/free-regular-svg-icons';
-import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import Header from './Header';
 import SearchForm from './SearchForm';
 import ArtistInfo from './ArtistInfo';
@@ -14,10 +12,18 @@ class Main extends React.Component {
             artistInfo: {},
             artistEvents: [],
             followArtistsOpen: false,
-            followedArtists: []
+            followedArtists: this.getFollowedArtists()
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.isArtistFollowed = this.isArtistFollowed.bind(this);
+        this.updateFollowedArtists = this.updateFollowedArtists.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.followedArtists != prevState.followedArtists) {
+            this.updateStorage();
+        }
     }
 
     handleSubmit(artist) {
@@ -75,18 +81,39 @@ class Main extends React.Component {
                 offers: event.offers
             })            
         })
-console.log(events)
         this.setState({
             artistEvents: events
         })
     }
 
-    getHeartIcon(artistName) {
-        if (this.state.followedArtists.includes(artistName)) {
-            return solidHeart
+    isArtistFollowed() {
+        return this.state.followedArtists.includes(this.state.artistInfo.name);         
+    }
+
+    updateFollowedArtists(artist) {
+        if (!this.state.followedArtists.includes(artist)) {
+            // add artist to array
+            this.setState({
+                followedArtists: [...this.state.followedArtists, artist]
+            })
         } else {
-            return regHeart
+            // remove artist from array
+            const otherArtists = this.state.followedArtists.filter((artistEl) => {
+                return artistEl != artist;
+            });
+            this.setState({
+                followedArtists: otherArtists
+            })
         }
+    }
+
+    getFollowedArtists() {
+        const artists = window.localStorage.getItem('followedArtists');
+        return artists.split('|');
+    }
+
+    updateStorage() {
+        window.localStorage.setItem('followedArtists', this.state.followedArtists.join('|'));    
     }
 
     render() {
@@ -102,7 +129,8 @@ console.log(events)
                         image = {this.state.artistInfo.image.thumb}
                         artistName = {this.state.artistInfo.name}
                         fbUrl = {this.state.artistInfo.fbUrl}
-                        heartIcon = {this.getHeartIcon(this.state.artistInfo.name)}
+                        isArtistFollowed = {this.isArtistFollowed}
+                        updateFollowedArtists = {this.updateFollowedArtists}
                     />
                 }
                 {
