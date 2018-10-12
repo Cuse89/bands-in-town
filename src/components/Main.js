@@ -1,4 +1,6 @@
 import React from 'react';
+import { faHeart as regHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import Header from './Header';
 import SearchForm from './SearchForm';
 import ArtistInfo from './ArtistInfo';
@@ -10,15 +12,12 @@ class Main extends React.Component {
 
         this.state = {
             artistInfo: {},
-            artistEvents: []
+            artistEvents: [],
+            followArtistsOpen: false,
+            followedArtists: []
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.getData = this.getData.bind(this);
-        // this.sortArtistInfo = this.sortArtistInfo.bind(this);
-        // this.sortEventInfo = this.sortEventInfo.bind(this);
-        // this.handleResponses = this.handleResponses.bind(this);
-
     }
 
     handleSubmit(artist) {
@@ -80,7 +79,14 @@ console.log(events)
         this.setState({
             artistEvents: events
         })
-        
+    }
+
+    getHeartIcon(artistName) {
+        if (this.state.followedArtists.includes(artistName)) {
+            return solidHeart
+        } else {
+            return regHeart
+        }
     }
 
     render() {
@@ -96,6 +102,7 @@ console.log(events)
                         image = {this.state.artistInfo.image.thumb}
                         artistName = {this.state.artistInfo.name}
                         fbUrl = {this.state.artistInfo.fbUrl}
+                        heartIcon = {this.getHeartIcon(this.state.artistInfo.name)}
                     />
                 }
                 {
@@ -103,7 +110,7 @@ console.log(events)
                         this.state.artistEvents.map((event, i) => {
                         return <ArtistEvent
                             key = {i}
-                            info = {event}                    
+                            info = {event}
                         />
                     })                    
                 }

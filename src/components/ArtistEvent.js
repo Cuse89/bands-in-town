@@ -5,7 +5,7 @@ class ArtistEvent extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            ticketStatus : this.getStatus()
+            
         }
     }  
 
@@ -26,13 +26,23 @@ class ArtistEvent extends React.Component {
         return status;
     }
 
+    extractDateTime(dateTime, dateOrTime) {
+        const dateTimeArr = dateTime.split('T');
+        if (dateOrTime == 'date') {
+            return dateTimeArr[0];
+        } else if (dateOrTime == 'time') {
+            return dateTimeArr[1]
+        }
+    }
+
     render() {
         return (
             <div>
+                {this.extractDateTime(this.props.info.dateTime, 'date')}
                 {this.props.info.venue.name} - -
                 {this.props.info.venue.city}, {this.props.info.venue.country}
                 <TicketButton
-                    status = {this.state.ticketStatus}
+                    status = {this.getStatus()}
                 />
             
             </div>
