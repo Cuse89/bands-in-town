@@ -1,6 +1,5 @@
 import React from 'react';
 import Header from './Header';
-import SearchForm from './SearchForm';
 import ArtistInfo from './ArtistInfo';
 import ArtistEvent from './ArtistEvent';
 import FollowedArtist from './FollowedArtist';

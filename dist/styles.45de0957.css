@@ -19,3 +19,6 @@ button:disabled {
 .is-active {
   font-weight: bold;
 }
+.pointer:hover {
+  cursor: pointer;
+}

@@ -1,13 +1,19 @@
 import React from 'react';
 import SearchForm from './SearchForm';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = (props) => (
     <header>
-        <h1 onClick = {props.handleGoHome}>Bands In Town</h1>
+        <h1 className="pointer" onClick = {props.handleGoHome}>Bands In Town</h1>
         {
             <SearchForm handleSubmit = {props.handleSubmit} />
         }
-        <div onClick={props.showFollowed}>My Artists</div>
+        <FontAwesomeIcon
+            icon={faUser}
+            cursor="pointer"
+            onClick={props.showFollowed}                    
+        />
     </header>
 );
 export default Header;

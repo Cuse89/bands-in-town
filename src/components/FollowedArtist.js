@@ -30,13 +30,16 @@ class FollowedArtist extends React.Component {
         return (
             <div>
                 <img src={this.props.info.thumb} alt={this.props.info.name}/>
-                <div onClick={this.seeArtist}>{this.props.info.name}</div>
+                <div
+                    className="pointer"
+                    onClick={this.seeArtist}
+                >
+                {this.props.info.name}
+                </div>
                 {
                     this.props.info.eventsCount > 0 ?
                     <div onClick={this.seeEvents}>See Upcoming Events</div> :
-                    <div>
-                    <p className="is-active">No Events Coming Up</p>
-                    </div>
+                    <div>No Events Coming Up</div>
                 }
                 <FontAwesomeIcon
                     icon={this.state.followed ? solidHeart : regHeart}
