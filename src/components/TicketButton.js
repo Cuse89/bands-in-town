@@ -3,11 +3,11 @@ import React from 'react';
 const TicketButton = (props) => (
     <React.Fragment>
         {
-            props.status == "No Tickets" ? 
-            <p>No Tickets</p> : 
+            props.available ? 
             <button>
                 {props.status}            
-            </button>
+            </button> :
+            <p>{props.status}</p>            
         }
     </React.Fragment>
 );

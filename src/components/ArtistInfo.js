@@ -10,36 +10,43 @@ class ArtistInfo extends React.Component {
             followed: this.props.isArtistFollowed() ? true : false,
         }
 
-        this.handleHeartClick = this.handleHeartClick.bind(this);
+        this.handleClickHeart = this.handleClickHeart.bind(this);
+        this.handleClickFollowed = this.handleClickFollowed.bind(this)
     }
 
     componentWillReceiveProps(prevProps) {
         if (prevProps.artistName != this.props.artistName) {
             this.setState({
                 followed: this.props.isArtistFollowed() ? true : false
-            })
+            });
         }
     }
 
-    handleHeartClick() {
+    handleClickHeart() {
         this.props.updateFollowedArtists(this.props.artistName);
         this.setState({
             followed: !this.state.followed
-        })
-    }  
+        });
+    }
+
+    handleClickFollowed() {
+        this.props.showFollowed();
+    }
 
     render() {
         return (
             <div>
-                <img src={this.props.image}/>
+                <img src={this.props.image} alt={this.props.artistName}/>
                 <div>
                     <h3>{this.props.artistName}</h3>
-                    <a href={this.props.fbUrl} target="_blank">Facebook</a>
+                    <a href={this.props.fbUrl} target='_blank'>Facebook</a>
                     <FontAwesomeIcon
                         icon={this.state.followed ? solidHeart : regHeart}
-                        color="red"
-                        onClick={this.handleHeartClick}                    
-                    />                    
+                        color='red'
+                        onClick={this.handleClickHeart}                    
+                    />
+                    <p>{this.state.followed ? 'Following' : 'Follow'}</p>
+                    <div onClick={this.handleClickFollowed}>Check out your followed artists</div>
                 </div>        
             </div>
         )

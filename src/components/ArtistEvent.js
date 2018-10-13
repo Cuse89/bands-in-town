@@ -43,6 +43,7 @@ class ArtistEvent extends React.Component {
                 {this.props.info.venue.city}, {this.props.info.venue.country}
                 <TicketButton
                     status = {this.getStatus()}
+                    available = {this.getStatus() ==  "Buy Tickets" || this.getStatus() ==  "Buy Presale Tickets" ? true : false}
                 />
             
             </div>

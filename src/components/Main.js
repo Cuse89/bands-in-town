@@ -3,6 +3,7 @@ import Header from './Header';
 import SearchForm from './SearchForm';
 import ArtistInfo from './ArtistInfo';
 import ArtistEvent from './ArtistEvent';
+import FollowedArtist from './FollowedArtist';
 
 class Main extends React.Component {
     constructor(props) {
@@ -11,13 +12,16 @@ class Main extends React.Component {
         this.state = {
             artistInfo: {},
             artistEvents: [],
+            followedArtistsInfo: [],
             followArtistsOpen: false,
-            followedArtists: this.getFollowedArtists()
+            followedArtists: this.getFollowedArtists(),
+            showFollowed: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
+        this.startSearch = this.startSearch.bind(this);
         this.isArtistFollowed = this.isArtistFollowed.bind(this);
         this.updateFollowedArtists = this.updateFollowedArtists.bind(this);
+        this.showFollowed = this.showFollowed.bind(this);
     }
 
     componentDidUpdate(prevProps, prevState) {
@@ -26,9 +30,15 @@ class Main extends React.Component {
         }
     }
 
-    handleSubmit(artist) {
-        this.getData('artist', `https://rest.bandsintown.com/artists/${artist}?app_id=c19ad5df9483acf93813b4275bb6d69b`);
-        this.getData('event', `https://rest.bandsintown.com/artists/${artist}/events?app_id=c19ad5df9483acf93813b4275bb6d69b&date=upcoming`);
+    startSearch(artist, getFollowed) {
+        const artistUrl = `https://rest.bandsintown.com/artists/${artist}?app_id=c19ad5df9483acf93813b4275bb6d69b`;
+        const eventUrl = `https://rest.bandsintown.com/artists/${artist}/events?app_id=c19ad5df9483acf93813b4275bb6d69b&date=upcoming`;
+        if (getFollowed) {
+            this.getData('followedArtist', artistUrl);
+        } else {
+            this.getData('artist', artistUrl);
+            this.getData('event', eventUrl);
+        }
     }
 
     getData(infoType, url) {
@@ -36,7 +46,7 @@ class Main extends React.Component {
         const Http = new XMLHttpRequest();
         Http.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
-                self.handleResponses(infoType, Http.responseText);                
+                self.handleResponses(infoType, Http.responseText);            
             }            
         };
         Http.open('GET', url);
@@ -47,14 +57,27 @@ class Main extends React.Component {
         const info = JSON.parse(response);
         switch(infoType) {
             case 'artist':
-                this.sortArtistInfo(info);
+                this.sortArtistInfo(info, 'artistInfo');
                 break;
             case 'event':
-                this.sortEventInfo(info);
+                this.sortEventInfo(info, 'artistEvents');
+                break;
+            case 'followedArtist':
+                this.sortFollowedArtistsInfo(info)
                 break;
             default:
                 return null
         }        
+    }
+
+    sortFollowedArtistsInfo(info) {
+        this.setState({
+            followedArtistsInfo: [...this.state.followedArtistsInfo, {
+                name: info.name,
+                thumb: info.thumb_url,
+                eventsCount: info.upcoming_event_count
+            }]
+        });
     }
 
     sortArtistInfo(info) {
@@ -67,7 +90,7 @@ class Main extends React.Component {
                 },
                 fbUrl: info.facebook_page_url
             }
-        })
+        });
     }
 
     sortEventInfo(infos) {
@@ -83,7 +106,7 @@ class Main extends React.Component {
         })
         this.setState({
             artistEvents: events
-        })
+        });
     }
 
     isArtistFollowed() {
@@ -95,7 +118,7 @@ class Main extends React.Component {
             // add artist to array
             this.setState({
                 followedArtists: [...this.state.followedArtists, artist]
-            })
+            });
         } else {
             // remove artist from array
             const otherArtists = this.state.followedArtists.filter((artistEl) => {
@@ -103,44 +126,62 @@ class Main extends React.Component {
             });
             this.setState({
                 followedArtists: otherArtists
-            })
+            });
         }
     }
 
     getFollowedArtists() {
         const artists = window.localStorage.getItem('followedArtists');
-        return artists.split('|');
+        return artists ? artists.split('|') : "";
     }
 
     updateStorage() {
         window.localStorage.setItem('followedArtists', this.state.followedArtists.join('|'));    
     }
 
+    showFollowed() {
+        this.setState({
+            showFollowed: true
+        });
+        this.state.followedArtists.forEach((artist) => {
+            this.startSearch(artist, true);
+        });
+    }
+
     render() {
         return (
             <div>
-                <Header/>
-                <SearchForm
-                    handleSubmit = {this.handleSubmit}
+                <Header
+                    handleSubmit = {this.startSearch}                
                 />
                 {
-                    this.state.artistInfo.name && 
+                    this.state.artistInfo.name && !this.state.showFollowed &&
                     <ArtistInfo
                         image = {this.state.artistInfo.image.thumb}
                         artistName = {this.state.artistInfo.name}
                         fbUrl = {this.state.artistInfo.fbUrl}
                         isArtistFollowed = {this.isArtistFollowed}
                         updateFollowedArtists = {this.updateFollowedArtists}
+                        showFollowed = {this.showFollowed}
                     />
                 }
                 {
-                    this.state.artistEvents.length > 0 &&
+                    this.state.artistEvents.length > 0 && !this.state.showFollowed &&
                         this.state.artistEvents.map((event, i) => {
                         return <ArtistEvent
                             key = {i}
                             info = {event}
                         />
                     })                    
+                }
+                {
+                    this.state.showFollowed && this.state.followedArtistsInfo.length > 0 &&
+                    this.state.followedArtistsInfo.map((artist, i) => {
+                        return <FollowedArtist
+                            key = {i}
+                            info = {artist}                   
+                        />
+                    })
                 }
             </div>
         )

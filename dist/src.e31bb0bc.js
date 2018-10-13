@@ -22205,7 +22205,9 @@ var _SearchForm = _interopRequireDefault(require("./SearchForm"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Header = function Header(props) {
-  return _react.default.createElement("header", null, _react.default.createElement("h1", null, "Bands In Town"), props.headerSearch && _react.default.createElement(_SearchForm.default, null));
+  return _react.default.createElement("header", null, _react.default.createElement("h1", null, "Bands In Town"), _react.default.createElement(_SearchForm.default, {
+    handleSubmit: props.handleSubmit
+  }));
 };
 
 var _default = Header;
@@ -32335,7 +32337,8 @@ function (_React$Component) {
     _this.state = {
       followed: _this.props.isArtistFollowed() ? true : false
     };
-    _this.handleHeartClick = _this.handleHeartClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleClickHeart = _this.handleClickHeart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleClickFollowed = _this.handleClickFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -32349,26 +32352,34 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "handleHeartClick",
-    value: function handleHeartClick() {
+    key: "handleClickHeart",
+    value: function handleClickHeart() {
       this.props.updateFollowedArtists(this.props.artistName);
       this.setState({
         followed: !this.state.followed
       });
     }
   }, {
+    key: "handleClickFollowed",
+    value: function handleClickFollowed() {
+      this.props.showFollowed();
+    }
+  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement("img", {
-        src: this.props.image
+        src: this.props.image,
+        alt: this.props.artistName
       }), _react.default.createElement("div", null, _react.default.createElement("h3", null, this.props.artistName), _react.default.createElement("a", {
         href: this.props.fbUrl,
         target: "_blank"
       }, "Facebook"), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
         color: "red",
-        onClick: this.handleHeartClick
-      })));
+        onClick: this.handleClickHeart
+      }), _react.default.createElement("p", null, this.state.followed ? 'Following' : 'Follow'), _react.default.createElement("div", {
+        onClick: this.handleClickFollowed
+      }, "Check out your followed artists")));
     }
   }]);
 
@@ -32390,7 +32401,7 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TicketButton = function TicketButton(props) {
-  return _react.default.createElement(_react.default.Fragment, null, props.status == "No Tickets" ? _react.default.createElement("p", null, "No Tickets") : _react.default.createElement("button", null, props.status));
+  return _react.default.createElement(_react.default.Fragment, null, props.available ? _react.default.createElement("button", null, props.status) : _react.default.createElement("p", null, props.status));
 };
 
 var _default = TicketButton;
@@ -32477,7 +32488,8 @@ function (_React$Component) {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, this.extractDateTime(this.props.info.dateTime, 'date'), this.props.info.venue.name, " - -", this.props.info.venue.city, ", ", this.props.info.venue.country, _react.default.createElement(_TicketButton.default, {
-        status: this.getStatus()
+        status: this.getStatus(),
+        available: this.getStatus() == "Buy Tickets" || this.getStatus() == "Buy Presale Tickets" ? true : false
       }));
     }
   }]);
@@ -32486,6 +32498,76 @@ function (_React$Component) {
 }(_react.default.Component);
 
 var _default = ArtistEvent;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./TicketButton":"components/TicketButton.js"}],"components/FollowedArtist.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _TicketButton = _interopRequireDefault(require("./TicketButton"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var FollowedArtist =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(FollowedArtist, _React$Component);
+
+  function FollowedArtist(props) {
+    var _this;
+
+    _classCallCheck(this, FollowedArtist);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(FollowedArtist).call(this, props));
+    _this.state = {};
+    return _this;
+  }
+
+  _createClass(FollowedArtist, [{
+    key: "seeEvents",
+    value: function seeEvents() {
+      console.log('see upcoming events');
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", null, _react.default.createElement("img", {
+        src: this.props.info.thumb,
+        alt: this.props.info.name
+      }), this.props.info.name, _react.default.createElement(_TicketButton.default, {
+        available: this.props.info.eventsCount > 0 ? true : false,
+        status: this.props.info.eventsCount > 0 ? 'See Upcoming Events' : 'No Events Coming Up'
+      }));
+    }
+  }]);
+
+  return FollowedArtist;
+}(_react.default.Component);
+
+var _default = FollowedArtist;
 exports.default = _default;
 },{"react":"../node_modules/react/index.js","./TicketButton":"components/TicketButton.js"}],"components/Main.js":[function(require,module,exports) {
 "use strict";
@@ -32504,6 +32586,8 @@ var _SearchForm = _interopRequireDefault(require("./SearchForm"));
 var _ArtistInfo = _interopRequireDefault(require("./ArtistInfo"));
 
 var _ArtistEvent = _interopRequireDefault(require("./ArtistEvent"));
+
+var _FollowedArtist = _interopRequireDefault(require("./FollowedArtist"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32547,12 +32631,15 @@ function (_React$Component) {
     _this.state = {
       artistInfo: {},
       artistEvents: [],
+      followedArtistsInfo: [],
       followArtistsOpen: false,
-      followedArtists: _this.getFollowedArtists()
+      followedArtists: _this.getFollowedArtists(),
+      showFollowed: false
     };
-    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.startSearch = _this.startSearch.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.isArtistFollowed = _this.isArtistFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.updateFollowedArtists = _this.updateFollowedArtists.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.showFollowed = _this.showFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -32564,10 +32651,17 @@ function (_React$Component) {
       }
     }
   }, {
-    key: "handleSubmit",
-    value: function handleSubmit(artist) {
-      this.getData('artist', "https://rest.bandsintown.com/artists/".concat(artist, "?app_id=c19ad5df9483acf93813b4275bb6d69b"));
-      this.getData('event', "https://rest.bandsintown.com/artists/".concat(artist, "/events?app_id=c19ad5df9483acf93813b4275bb6d69b&date=upcoming"));
+    key: "startSearch",
+    value: function startSearch(artist, getFollowed) {
+      var artistUrl = "https://rest.bandsintown.com/artists/".concat(artist, "?app_id=c19ad5df9483acf93813b4275bb6d69b");
+      var eventUrl = "https://rest.bandsintown.com/artists/".concat(artist, "/events?app_id=c19ad5df9483acf93813b4275bb6d69b&date=upcoming");
+
+      if (getFollowed) {
+        this.getData('followedArtist', artistUrl);
+      } else {
+        this.getData('artist', artistUrl);
+        this.getData('event', eventUrl);
+      }
     }
   }, {
     key: "getData",
@@ -32591,16 +32685,31 @@ function (_React$Component) {
 
       switch (infoType) {
         case 'artist':
-          this.sortArtistInfo(info);
+          this.sortArtistInfo(info, 'artistInfo');
           break;
 
         case 'event':
-          this.sortEventInfo(info);
+          this.sortEventInfo(info, 'artistEvents');
+          break;
+
+        case 'followedArtist':
+          this.sortFollowedArtistsInfo(info);
           break;
 
         default:
           return null;
       }
+    }
+  }, {
+    key: "sortFollowedArtistsInfo",
+    value: function sortFollowedArtistsInfo(info) {
+      this.setState({
+        followedArtistsInfo: _toConsumableArray(this.state.followedArtistsInfo).concat([{
+          name: info.name,
+          thumb: info.thumb_url,
+          eventsCount: info.upcoming_event_count
+        }])
+      });
     }
   }, {
     key: "sortArtistInfo",
@@ -32660,7 +32769,7 @@ function (_React$Component) {
     key: "getFollowedArtists",
     value: function getFollowedArtists() {
       var artists = window.localStorage.getItem('followedArtists');
-      return artists.split('|');
+      return artists ? artists.split('|') : "";
     }
   }, {
     key: "updateStorage",
@@ -32668,20 +32777,38 @@ function (_React$Component) {
       window.localStorage.setItem('followedArtists', this.state.followedArtists.join('|'));
     }
   }, {
+    key: "showFollowed",
+    value: function showFollowed() {
+      var _this2 = this;
+
+      this.setState({
+        showFollowed: true
+      });
+      this.state.followedArtists.forEach(function (artist) {
+        _this2.startSearch(artist, true);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, null), _react.default.createElement(_SearchForm.default, {
-        handleSubmit: this.handleSubmit
-      }), this.state.artistInfo.name && _react.default.createElement(_ArtistInfo.default, {
+      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, {
+        handleSubmit: this.startSearch
+      }), this.state.artistInfo.name && !this.state.showFollowed && _react.default.createElement(_ArtistInfo.default, {
         image: this.state.artistInfo.image.thumb,
         artistName: this.state.artistInfo.name,
         fbUrl: this.state.artistInfo.fbUrl,
         isArtistFollowed: this.isArtistFollowed,
-        updateFollowedArtists: this.updateFollowedArtists
-      }), this.state.artistEvents.length > 0 && this.state.artistEvents.map(function (event, i) {
+        updateFollowedArtists: this.updateFollowedArtists,
+        showFollowed: this.showFollowed
+      }), this.state.artistEvents.length > 0 && !this.state.showFollowed && this.state.artistEvents.map(function (event, i) {
         return _react.default.createElement(_ArtistEvent.default, {
           key: i,
           info: event
+        });
+      }), this.state.showFollowed && this.state.followedArtistsInfo.length > 0 && this.state.followedArtistsInfo.map(function (artist, i) {
+        return _react.default.createElement(_FollowedArtist.default, {
+          key: i,
+          info: artist
         });
       }));
     }
@@ -32692,7 +32819,7 @@ function (_React$Component) {
 
 var _default = Main;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./SearchForm":"components/SearchForm.js","./ArtistInfo":"components/ArtistInfo.js","./ArtistEvent":"components/ArtistEvent.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./SearchForm":"components/SearchForm.js","./ArtistInfo":"components/ArtistInfo.js","./ArtistEvent":"components/ArtistEvent.js","./FollowedArtist":"components/FollowedArtist.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -32735,7 +32862,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60951" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54618" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);
