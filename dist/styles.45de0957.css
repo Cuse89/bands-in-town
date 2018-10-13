@@ -46,6 +46,8 @@ form {
 }
 .main-wrapper {
   display: flex;
+  margin-top: 75px;
+  padding: 10px;
 }
 @media screen and (max-width: 768px) {
   .main-wrapper {
@@ -58,15 +60,22 @@ form {
   }
 }
 .main-wrapper .events-wrapper {
-  display: flex;
-  flex-direction: column;
   width: 100%;
-  margin-top: 5px;
+}
+@media screen and (min-width: 768px) {
+  .main-wrapper .events-wrapper {
+    float: right;
+    margin-left: 300px;
+    margin-top: -10px;
+  }
 }
 .main-wrapper .events-wrapper a {
   color: #364051;
 }
 header {
+  width: 100%;
+  position: fixed;
+  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -112,6 +121,9 @@ header .my-artists h3 {
   right: -27%;
   color: #a9a9a9;
 }
+.artist-container {
+  background: white;
+}
 .artist-wrapper {
   display: flex;
 }
@@ -125,6 +137,7 @@ header .my-artists h3 {
   .artist-wrapper {
     flex-direction: column;
     width: 300px;
+    position: fixed;
   }
 }
 .artist-wrapper .artist-image img {

@@ -1,5 +1,7 @@
 .main-wrapper {
     display: flex;
+    margin-top: 75px;
+    padding: 10px;
     @media screen and (max-width: @desktop-breakpoint) {
         flex-direction: column
     }
@@ -7,10 +9,12 @@
         flex-direction: row
     }
     .events-wrapper {
-        display: flex;
-        flex-direction: column;
         width: 100%;
-        margin-top: 5px;
+        @media screen and (min-width: @desktop-breakpoint) {
+            float: right;
+            margin-left: 300px;
+            margin-top: -10px;
+        }        
         a {
             color: @dark-blue
         }
