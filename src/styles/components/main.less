@@ -1,0 +1,18 @@
+.main-wrapper {
+    display: flex;
+    @media screen and (max-width: @desktop-breakpoint) {
+        flex-direction: column
+    }
+    @media screen and (min-width: @desktop-breakpoint) {
+        flex-direction: row
+    }
+    .events-wrapper {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        margin-top: 5px;
+        a {
+            color: @dark-blue
+        }
+    }
+}

@@ -1,5 +1,4 @@
 import React from 'react';
-import TicketButton from './TicketButton';
 
 class ArtistEvent extends React.Component {
     constructor(props) {
@@ -7,7 +6,7 @@ class ArtistEvent extends React.Component {
     }  
 
     getStatus() {
-        let status = "No Tickets";        
+        let status = "Sold Out";        
         this.props.info.offers.forEach((offer) => {            
             switch(offer.type) {
                 case 'Presale':
@@ -17,13 +16,13 @@ class ArtistEvent extends React.Component {
                     status = "Buy Tickets" 
                     break;
                 default:
-                    status = "No Tickets"
+                    status = "Sold Out"
             } 
         })
         return status;
     }
 
-    extractDateTime(dateTime, dateOrTime) {
+    extractDate(dateTime, dateOrTime) {
         const dateTimeArr = dateTime.split('T');
         if (dateOrTime == 'date') {
             return dateTimeArr[0];
@@ -34,15 +33,28 @@ class ArtistEvent extends React.Component {
 
     render() {
         return (
-            <div>
-                {this.extractDateTime(this.props.info.dateTime, 'date')}
-                {this.props.info.venue.name} - -
-                {this.props.info.venue.city}, {this.props.info.venue.country}
-                <TicketButton
-                    status = {this.getStatus()}
-                    available = {this.getStatus() ==  "Buy Tickets" || this.getStatus() ==  "Buy Presale Tickets" ? true : false}
-                    url = {this.props.info.offers.length > 0 && this.props.info.offers[0].url}
-                />
+            <div className = 'event'>
+                <div className = 'date event-item'>
+                    {this.extractDate(this.props.info.dateTime, 'date')}
+                </div>
+                <div className = 'location event-item'>
+                    {`${this.props.info.venue.name}, ${this.props.info.venue.city}, ${this.props.info.venue.country}` }
+                </div>
+                
+                <div className = 'ticket-button event-item'>
+                    {
+                        this.getStatus() ==  "Buy Tickets" || this.getStatus() ==  "Buy Presale Tickets" ?
+                        <a
+                            className = 'ticket-url'                        
+                            href = {this.props.info.offers.length > 0 && this.props.info.offers[0].url} target='_blank'
+                        >                                       
+                            {this.getStatus()}            
+                        </a> :
+                        <p>
+                            {this.getStatus()}
+                        </p>            
+                    }
+                </div>
             
             </div>
         )

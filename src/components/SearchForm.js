@@ -1,7 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
-import MobileSearch from './MobileSearch';
 
 class SearchForm extends React.Component {
     constructor(props) {
@@ -34,14 +33,14 @@ class SearchForm extends React.Component {
         document.body.style.overflow = 'hidden';
         this.setState({
             mobileSearch: true
-        });        
+        });             
     }
 
     closeMobileSearch() {
         document.body.style.overflow = 'scroll';
         this.setState({
             mobileSearch: false
-        });    
+        });
     }
 
         
@@ -77,7 +76,7 @@ class SearchForm extends React.Component {
                                 type = 'type'
                                 value = {this.state.value}
                                 onChange = {this.handleChange}
-                                placeholder = 'Search Artists...'                
+                                placeholder = 'Search Artists...'
                             />
                             <FontAwesomeIcon   
                                 className = 'icon mobile-search-icon mobile-tablet-only '

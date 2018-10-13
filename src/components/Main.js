@@ -168,25 +168,29 @@ class Main extends React.Component {
                     handleGoHome = {this.resetState}
                     showFollowed = {this.showFollowed}   
                 />
-                {
-                    this.state.artistInfo.name && !this.state.showFollowed &&
-                    <ArtistInfo
-                        image = {this.state.artistInfo.image.thumb}
-                        artistName = {this.state.artistInfo.name}
-                        fbUrl = {this.state.artistInfo.fbUrl}
-                        isArtistFollowed = {this.isArtistFollowed}
-                        updateFollowedArtists = {this.updateFollowedArtists}
-                    />
-                }
-                {
-                    this.state.artistEvents.length > 0 && !this.state.showFollowed &&
-                        this.state.artistEvents.map((event, i) => {
-                        return <ArtistEvent
-                            key = {i}
-                            info = {event}
+                <div className = 'main-wrapper'>
+                    {
+                        this.state.artistInfo.name && !this.state.showFollowed &&
+                        <ArtistInfo
+                            image = {this.state.artistInfo.image.large}
+                            artistName = {this.state.artistInfo.name}
+                            fbUrl = {this.state.artistInfo.fbUrl}
+                            isArtistFollowed = {this.isArtistFollowed}
+                            updateFollowedArtists = {this.updateFollowedArtists}
                         />
-                    })                    
-                }
+                    }
+                    <div className = 'events-wrapper'>
+                    {
+                        this.state.artistEvents.length > 0 && !this.state.showFollowed &&
+                            this.state.artistEvents.map((event, i) => {
+                            return <ArtistEvent
+                                key = {i}
+                                info = {event}
+                            />
+                        })                    
+                    }
+                    </div>
+                </div>
                 {
                     this.state.showFollowed && this.state.followedArtistsInfo.length > 0 &&
                     this.state.followedArtistsInfo.map((artist, i) => {
