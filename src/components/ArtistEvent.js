@@ -44,6 +44,7 @@ class ArtistEvent extends React.Component {
                 <TicketButton
                     status = {this.getStatus()}
                     available = {this.getStatus() ==  "Buy Tickets" || this.getStatus() ==  "Buy Presale Tickets" ? true : false}
+                    url = {this.props.info.offers.length > 0 && this.props.info.offers[0].url}
                 />
             
             </div>

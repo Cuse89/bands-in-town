@@ -22205,9 +22205,13 @@ var _SearchForm = _interopRequireDefault(require("./SearchForm"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Header = function Header(props) {
-  return _react.default.createElement("header", null, _react.default.createElement("h1", null, "Bands In Town"), _react.default.createElement(_SearchForm.default, {
+  return _react.default.createElement("header", null, _react.default.createElement("h1", {
+    onClick: props.handleGoHome
+  }, "Bands In Town"), _react.default.createElement(_SearchForm.default, {
     handleSubmit: props.handleSubmit
-  }));
+  }), _react.default.createElement("div", {
+    onClick: props.showFollowed
+  }, "My Artists"));
 };
 
 var _default = Header;
@@ -32338,7 +32342,6 @@ function (_React$Component) {
       followed: _this.props.isArtistFollowed() ? true : false
     };
     _this.handleClickHeart = _this.handleClickHeart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleClickFollowed = _this.handleClickFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -32360,11 +32363,6 @@ function (_React$Component) {
       });
     }
   }, {
-    key: "handleClickFollowed",
-    value: function handleClickFollowed() {
-      this.props.showFollowed();
-    }
-  }, {
     key: "render",
     value: function render() {
       return _react.default.createElement("div", null, _react.default.createElement("img", {
@@ -32377,9 +32375,7 @@ function (_React$Component) {
         icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
         color: "red",
         onClick: this.handleClickHeart
-      }), _react.default.createElement("p", null, this.state.followed ? 'Following' : 'Follow'), _react.default.createElement("div", {
-        onClick: this.handleClickFollowed
-      }, "Check out your followed artists")));
+      }), _react.default.createElement("p", null, this.state.followed ? 'Following' : 'Follow')));
     }
   }]);
 
@@ -32401,7 +32397,10 @@ var _react = _interopRequireDefault(require("react"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TicketButton = function TicketButton(props) {
-  return _react.default.createElement(_react.default.Fragment, null, props.available ? _react.default.createElement("button", null, props.status) : _react.default.createElement("p", null, props.status));
+  return _react.default.createElement(_react.default.Fragment, null, props.available ? _react.default.createElement("a", {
+    href: props.url,
+    target: "_blank"
+  }, _react.default.createElement("button", null, props.status)) : _react.default.createElement("p", null, props.status));
 };
 
 var _default = TicketButton;
@@ -32489,7 +32488,8 @@ function (_React$Component) {
     value: function render() {
       return _react.default.createElement("div", null, this.extractDateTime(this.props.info.dateTime, 'date'), this.props.info.venue.name, " - -", this.props.info.venue.city, ", ", this.props.info.venue.country, _react.default.createElement(_TicketButton.default, {
         status: this.getStatus(),
-        available: this.getStatus() == "Buy Tickets" || this.getStatus() == "Buy Presale Tickets" ? true : false
+        available: this.getStatus() == "Buy Tickets" || this.getStatus() == "Buy Presale Tickets" ? true : false,
+        url: this.props.info.offers.length > 0 && this.props.info.offers[0].url
       }));
     }
   }]);
@@ -32509,7 +32509,11 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _TicketButton = _interopRequireDefault(require("./TicketButton"));
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeRegularSvgIcons = require("@fortawesome/free-regular-svg-icons");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32523,13 +32527,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 var FollowedArtist =
 /*#__PURE__*/
@@ -32542,14 +32546,28 @@ function (_React$Component) {
     _classCallCheck(this, FollowedArtist);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(FollowedArtist).call(this, props));
-    _this.state = {};
+    _this.state = {
+      followed: _this.props.isArtistFollowed(_this.props.info.name) ? true : false,
+      // cache info, to allow user to unlike and relike, and obtain info again
+      cachedInfo: _this.props.info
+    };
+    _this.seeArtist = _this.seeArtist.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleClickHeart = _this.handleClickHeart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
   _createClass(FollowedArtist, [{
-    key: "seeEvents",
-    value: function seeEvents() {
-      console.log('see upcoming events');
+    key: "seeArtist",
+    value: function seeArtist() {
+      this.props.handleSubmit(this.state.cachedInfo.name);
+    }
+  }, {
+    key: "handleClickHeart",
+    value: function handleClickHeart() {
+      this.props.updateFollowedArtists(this.state.cachedInfo.name);
+      this.setState({
+        followed: !this.state.followed
+      });
     }
   }, {
     key: "render",
@@ -32557,9 +32575,14 @@ function (_React$Component) {
       return _react.default.createElement("div", null, _react.default.createElement("img", {
         src: this.props.info.thumb,
         alt: this.props.info.name
-      }), this.props.info.name, _react.default.createElement(_TicketButton.default, {
-        available: this.props.info.eventsCount > 0 ? true : false,
-        status: this.props.info.eventsCount > 0 ? 'See Upcoming Events' : 'No Events Coming Up'
+      }), _react.default.createElement("div", {
+        onClick: this.seeArtist
+      }, this.props.info.name), this.props.info.eventsCount > 0 ? _react.default.createElement("div", {
+        onClick: this.seeEvents
+      }, "See Upcoming Events") : _react.default.createElement("div", null, "No Events Coming Up"), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
+        color: "red",
+        onClick: this.handleClickHeart
       }));
     }
   }]);
@@ -32569,7 +32592,7 @@ function (_React$Component) {
 
 var _default = FollowedArtist;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./TicketButton":"components/TicketButton.js"}],"components/Main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-regular-svg-icons":"../node_modules/@fortawesome/free-regular-svg-icons/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js"}],"components/Main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -32628,18 +32651,12 @@ function (_React$Component) {
     _classCallCheck(this, Main);
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Main).call(this, props));
-    _this.state = {
-      artistInfo: {},
-      artistEvents: [],
-      followedArtistsInfo: [],
-      followArtistsOpen: false,
-      followedArtists: _this.getFollowedArtists(),
-      showFollowed: false
-    };
+    _this.state = _this.getInitialState();
     _this.startSearch = _this.startSearch.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.isArtistFollowed = _this.isArtistFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.updateFollowedArtists = _this.updateFollowedArtists.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.showFollowed = _this.showFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.resetState = _this.resetState.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -32649,6 +32666,18 @@ function (_React$Component) {
       if (this.state.followedArtists != prevState.followedArtists) {
         this.updateStorage();
       }
+    }
+  }, {
+    key: "getInitialState",
+    value: function getInitialState() {
+      return {
+        artistInfo: {},
+        artistEvents: [],
+        followedArtistsInfo: [],
+        followArtistsOpen: false,
+        followedArtists: this.getFollowedArtists(),
+        showFollowed: false
+      };
     }
   }, {
     key: "startSearch",
@@ -32722,7 +32751,8 @@ function (_React$Component) {
             thumb: info.thumb_url
           },
           fbUrl: info.facebook_page_url
-        }
+        },
+        showFollowed: false
       });
     }
   }, {
@@ -32744,8 +32774,8 @@ function (_React$Component) {
     }
   }, {
     key: "isArtistFollowed",
-    value: function isArtistFollowed() {
-      return this.state.followedArtists.includes(this.state.artistInfo.name);
+    value: function isArtistFollowed(artist) {
+      return this.state.followedArtists.includes(artist ? artist : this.state.artistInfo.name);
     }
   }, {
     key: "updateFollowedArtists",
@@ -32769,7 +32799,7 @@ function (_React$Component) {
     key: "getFollowedArtists",
     value: function getFollowedArtists() {
       var artists = window.localStorage.getItem('followedArtists');
-      return artists ? artists.split('|') : "";
+      return artists ? artists.split('|') : [];
     }
   }, {
     key: "updateStorage",
@@ -32782,24 +32812,33 @@ function (_React$Component) {
       var _this2 = this;
 
       this.setState({
-        showFollowed: true
+        showFollowed: true,
+        followedArtistsInfo: []
       });
       this.state.followedArtists.forEach(function (artist) {
         _this2.startSearch(artist, true);
       });
     }
   }, {
+    key: "resetState",
+    value: function resetState() {
+      this.setState(this.getInitialState());
+    }
+  }, {
     key: "render",
     value: function render() {
+      var _this3 = this;
+
       return _react.default.createElement("div", null, _react.default.createElement(_Header.default, {
-        handleSubmit: this.startSearch
+        handleSubmit: this.startSearch,
+        handleGoHome: this.resetState,
+        showFollowed: this.showFollowed
       }), this.state.artistInfo.name && !this.state.showFollowed && _react.default.createElement(_ArtistInfo.default, {
         image: this.state.artistInfo.image.thumb,
         artistName: this.state.artistInfo.name,
         fbUrl: this.state.artistInfo.fbUrl,
         isArtistFollowed: this.isArtistFollowed,
-        updateFollowedArtists: this.updateFollowedArtists,
-        showFollowed: this.showFollowed
+        updateFollowedArtists: this.updateFollowedArtists
       }), this.state.artistEvents.length > 0 && !this.state.showFollowed && this.state.artistEvents.map(function (event, i) {
         return _react.default.createElement(_ArtistEvent.default, {
           key: i,
@@ -32808,7 +32847,10 @@ function (_React$Component) {
       }), this.state.showFollowed && this.state.followedArtistsInfo.length > 0 && this.state.followedArtistsInfo.map(function (artist, i) {
         return _react.default.createElement(_FollowedArtist.default, {
           key: i,
-          info: artist
+          info: artist,
+          handleSubmit: _this3.startSearch,
+          isArtistFollowed: _this3.isArtistFollowed,
+          updateFollowedArtists: _this3.updateFollowedArtists
         });
       }));
     }

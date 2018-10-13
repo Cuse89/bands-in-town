@@ -1,29 +1,46 @@
 import React from 'react';
-import TicketButton from './TicketButton';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart as regHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 
 class FollowedArtist extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            
+            followed: this.props.isArtistFollowed(this.props.info.name) ? true : false,
+            // cache info, to allow user to unlike and relike, and obtain info again
+            cachedInfo: this.props.info
         }
+        this.seeArtist = this.seeArtist.bind(this);
+        this.handleClickHeart = this.handleClickHeart.bind(this);
     }
 
-    seeEvents() {
-        console.log('see upcoming events')
+    seeArtist() {
+        this.props.handleSubmit(this.state.cachedInfo.name);
+    }
+
+    handleClickHeart() {
+        this.props.updateFollowedArtists(this.state.cachedInfo.name);
+        this.setState({
+            followed: !this.state.followed
+        });
     }
 
     render() {
         return (
             <div>
                 <img src={this.props.info.thumb} alt={this.props.info.name}/>
-                {this.props.info.name} 
+                <div onClick={this.seeArtist}>{this.props.info.name}</div>
                 {
-                    <TicketButton
-                        available = {this.props.info.eventsCount > 0 ? true : false}
-                        status = {this.props.info.eventsCount > 0 ? 'See Upcoming Events' : 'No Events Coming Up'}                    
-                    />
-                }        
+                    this.props.info.eventsCount > 0 ?
+                    <div onClick={this.seeEvents}>See Upcoming Events</div> :
+                    <div>No Events Coming Up</div>
+                }
+                <FontAwesomeIcon
+                    icon={this.state.followed ? solidHeart : regHeart}
+                    color='red'
+                    onClick={this.handleClickHeart}                    
+                />                
             </div>
         )
     }

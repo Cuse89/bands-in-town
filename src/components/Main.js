@@ -9,24 +9,29 @@ class Main extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {
+        this.state = this.getInitialState();   
+
+        this.startSearch = this.startSearch.bind(this);
+        this.isArtistFollowed = this.isArtistFollowed.bind(this);
+        this.updateFollowedArtists = this.updateFollowedArtists.bind(this);
+        this.showFollowed = this.showFollowed.bind(this);
+        this.resetState = this.resetState.bind(this);
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.followedArtists != prevState.followedArtists) {
+            this.updateStorage();
+        }
+    }
+
+    getInitialState() {
+        return {
             artistInfo: {},
             artistEvents: [],
             followedArtistsInfo: [],
             followArtistsOpen: false,
             followedArtists: this.getFollowedArtists(),
             showFollowed: false
-        }
-
-        this.startSearch = this.startSearch.bind(this);
-        this.isArtistFollowed = this.isArtistFollowed.bind(this);
-        this.updateFollowedArtists = this.updateFollowedArtists.bind(this);
-        this.showFollowed = this.showFollowed.bind(this);
-    }
-
-    componentDidUpdate(prevProps, prevState) {
-        if (this.state.followedArtists != prevState.followedArtists) {
-            this.updateStorage();
         }
     }
 
@@ -89,7 +94,8 @@ class Main extends React.Component {
                     thumb: info.thumb_url
                 },
                 fbUrl: info.facebook_page_url
-            }
+            },
+            showFollowed: false
         });
     }
 
@@ -109,8 +115,8 @@ class Main extends React.Component {
         });
     }
 
-    isArtistFollowed() {
-        return this.state.followedArtists.includes(this.state.artistInfo.name);         
+    isArtistFollowed(artist) {
+        return this.state.followedArtists.includes(artist ? artist : this.state.artistInfo.name);         
     }
 
     updateFollowedArtists(artist) {
@@ -132,7 +138,7 @@ class Main extends React.Component {
 
     getFollowedArtists() {
         const artists = window.localStorage.getItem('followedArtists');
-        return artists ? artists.split('|') : "";
+        return artists ? artists.split('|') : [];
     }
 
     updateStorage() {
@@ -141,18 +147,25 @@ class Main extends React.Component {
 
     showFollowed() {
         this.setState({
-            showFollowed: true
+            showFollowed: true,
+            followedArtistsInfo : []
         });
         this.state.followedArtists.forEach((artist) => {
             this.startSearch(artist, true);
         });
     }
 
+    resetState() {
+        this.setState(this.getInitialState())
+    }
+
     render() {
         return (
             <div>
                 <Header
-                    handleSubmit = {this.startSearch}                
+                    handleSubmit = {this.startSearch}
+                    handleGoHome = {this.resetState}
+                    showFollowed = {this.showFollowed}   
                 />
                 {
                     this.state.artistInfo.name && !this.state.showFollowed &&
@@ -162,7 +175,6 @@ class Main extends React.Component {
                         fbUrl = {this.state.artistInfo.fbUrl}
                         isArtistFollowed = {this.isArtistFollowed}
                         updateFollowedArtists = {this.updateFollowedArtists}
-                        showFollowed = {this.showFollowed}
                     />
                 }
                 {
@@ -179,7 +191,10 @@ class Main extends React.Component {
                     this.state.followedArtistsInfo.map((artist, i) => {
                         return <FollowedArtist
                             key = {i}
-                            info = {artist}                   
+                            info = {artist}
+                            handleSubmit = {this.startSearch}
+                            isArtistFollowed = {this.isArtistFollowed}
+                            updateFollowedArtists = {this.updateFollowedArtists}         
                         />
                     })
                 }

@@ -11,7 +11,6 @@ class ArtistInfo extends React.Component {
         }
 
         this.handleClickHeart = this.handleClickHeart.bind(this);
-        this.handleClickFollowed = this.handleClickFollowed.bind(this)
     }
 
     componentWillReceiveProps(prevProps) {
@@ -29,10 +28,6 @@ class ArtistInfo extends React.Component {
         });
     }
 
-    handleClickFollowed() {
-        this.props.showFollowed();
-    }
-
     render() {
         return (
             <div>
@@ -46,7 +41,6 @@ class ArtistInfo extends React.Component {
                         onClick={this.handleClickHeart}                    
                     />
                     <p>{this.state.followed ? 'Following' : 'Follow'}</p>
-                    <div onClick={this.handleClickFollowed}>Check out your followed artists</div>
                 </div>        
             </div>
         )

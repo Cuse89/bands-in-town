@@ -3,12 +3,11 @@ import SearchForm from './SearchForm';
 
 const Header = (props) => (
     <header>
-        <h1>Bands In Town</h1>
+        <h1 onClick = {props.handleGoHome}>Bands In Town</h1>
         {
-            <SearchForm
-                handleSubmit =  {props.handleSubmit}            
-            />
+            <SearchForm handleSubmit = {props.handleSubmit} />
         }
+        <div onClick={props.showFollowed}>My Artists</div>
     </header>
 );
 export default Header;
