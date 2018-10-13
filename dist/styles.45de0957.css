@@ -2,13 +2,15 @@
   box-sizing: border-box;
 }
 html {
-  font-size: 62.5%;
+  padding: 0;
+  margin: 0;
 }
 body {
   color: #333;
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.6rem;
-  line-height: 1.6;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
 }
 button {
   cursor: pointer;
@@ -16,9 +18,40 @@ button {
 button:disabled {
   cursor: default;
 }
+form {
+  margin-bottom: 0;
+}
 .is-active {
   font-weight: bold;
 }
 .pointer:hover {
   cursor: pointer;
+}
+@media screen and (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+}
+.hidden {
+  display: none;
+}
+header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  background: #364051;
+  color: white;
+}
+header .my-artists {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+header .my-artists h3 {
+  margin-left: 10px;
+}
+.search-form .icon {
+  position: relative;
+  right: 10px;
 }

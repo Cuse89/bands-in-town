@@ -1,4 +1,6 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 class SearchForm extends React.Component {
     constructor(props) {
@@ -26,16 +28,25 @@ class SearchForm extends React.Component {
         
     render() {
         return (
-            <form>
+            <form className='search-form'>
+                <FontAwesomeIcon   
+                    className = {'icon'}
+                    icon = {faSearch}
+                    cursor = 'pointer'
+                    onClick = {this.handleSubmit}               
+                /> 
                 <input
-                    type = 'text'
+                    type = 'type'
                     value = {this.state.value}
                     onChange = {this.handleChange}
                     placeholder = 'Search Artists...'                                  
                 />
-                <button onClick = {this.handleSubmit}>
-                    Search
-                </button>            
+                <input
+                    style = {{display: 'none'}}
+                    type = 'submit'
+                    onClick = {this.handleSubmit}
+                >
+                </input>
             </form>
         )
     }

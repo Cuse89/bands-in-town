@@ -5,15 +5,19 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 
 const Header = (props) => (
     <header>
-        <h1 className="pointer" onClick = {props.handleGoHome}>Bands In Town</h1>
-        {
-            <SearchForm handleSubmit = {props.handleSubmit} />
-        }
-        <FontAwesomeIcon
-            icon={faUser}
-            cursor="pointer"
-            onClick={props.showFollowed}                    
-        />
+        <div className="my-artists">
+            <FontAwesomeIcon
+                className = 'icon'
+                color = 'white'
+                icon = {faUser}
+                cursor = 'pointer'
+                size ='2x'
+                onClick = {props.showFollowed}               
+            />
+            <h3 className = 'desktop-only'>My Artists</h3>   
+        </div>         
+        <h1 className = 'pointer' onClick = {props.handleGoHome}>Bands In Town</h1>
+        <SearchForm handleSubmit = {props.handleSubmit} />
     </header>
 );
 export default Header;
