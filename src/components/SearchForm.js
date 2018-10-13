@@ -1,17 +1,20 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import MobileSearch from './MobileSearch';
 
 class SearchForm extends React.Component {
     constructor(props) {
         super(props)
 
         this.state = {
-            value : ""    
+            value : "",
+            mobileSearch : false   
         }
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.openMobileSearch = this.openMobileSearch.bind(this);
     }
 
 
@@ -23,24 +26,70 @@ class SearchForm extends React.Component {
 
     handleSubmit(e) {
         e.preventDefault();
+        this.closeMobileSearch()
         this.props.handleSubmit(this.state.value);
     }
+
+    openMobileSearch() {
+        document.body.style.overflow = 'hidden';
+        this.setState({
+            mobileSearch: true
+        });        
+    }
+
+    closeMobileSearch() {
+        document.body.style.overflow = 'scroll';
+        this.setState({
+            mobileSearch: false
+        });    
+    }
+
         
     render() {
         return (
             <form className='search-form'>
                 <FontAwesomeIcon   
-                    className = {'icon'}
+                    className = 'icon desktop-only'
                     icon = {faSearch}
                     cursor = 'pointer'
                     onClick = {this.handleSubmit}               
-                /> 
+                />
                 <input
+                    className = 'input-desktop desktop-only'
                     type = 'type'
                     value = {this.state.value}
                     onChange = {this.handleChange}
                     placeholder = 'Search Artists...'                                  
                 />
+                <FontAwesomeIcon   
+                    className = 'icon mobile-tablet-only'
+                    icon = {faSearch}
+                    cursor = 'pointer'
+                    size = '2x'
+                    onClick = {this.openMobileSearch}               
+                />
+                {
+                    this.state.mobileSearch &&
+                    <div className = 'mobile-search-wrapper'>
+                        <div className = 'mobile-search'>
+                            <input
+                                className = 'input-mobile'
+                                type = 'type'
+                                value = {this.state.value}
+                                onChange = {this.handleChange}
+                                placeholder = 'Search Artists...'                
+                            />
+                            <FontAwesomeIcon   
+                                className = 'icon mobile-search-icon mobile-tablet-only '
+                                icon = {faSearch}
+                                cursor = 'pointer'
+                                size = '3x'
+                                onClick = {this.handleSubmit}                                        
+                            />
+                        </div>
+                    </div>                    
+                }
+                
                 <input
                     style = {{display: 'none'}}
                     type = 'submit'

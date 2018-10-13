@@ -126,9 +126,9 @@ class Main extends React.Component {
             });
         } else {
             // remove artist from array
-            const otherArtists = this.state.followedArtists.filter((artistEl) => {
+            let otherArtists = this.state.followedArtists.filter((artistEl) => {
                 return artistEl != artist;
-            });
+            });           
             this.setState({
                 followedArtists: otherArtists
             });
@@ -145,11 +145,13 @@ class Main extends React.Component {
     }
 
     showFollowed() {
+        console.log('show followed start - ',this.state.followedArtists.length )
         this.setState({
             showFollowed: true,
             followedArtistsInfo : []
         });
         this.state.followedArtists.forEach((artist) => {
+            
             this.startSearch(artist, true);
         });
     }

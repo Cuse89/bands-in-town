@@ -13,6 +13,7 @@ body {
     line-height: 1;
     padding: 0;
     margin: 0;
+    min-width: 380px;
 }
 
 button {
@@ -37,6 +38,12 @@ form {
 
 .desktop-only {
     @media screen and (max-width: @desktop-breakpoint) {
+        display : none;
+    }
+}
+
+.mobile-tablet-only {
+    @media screen and (min-width: @desktop-breakpoint) {
         display : none;
     }
 }

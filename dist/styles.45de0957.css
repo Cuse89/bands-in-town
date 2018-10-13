@@ -11,6 +11,7 @@ body {
   line-height: 1;
   padding: 0;
   margin: 0;
+  min-width: 380px;
 }
 button {
   cursor: pointer;
@@ -29,6 +30,11 @@ form {
 }
 @media screen and (max-width: 768px) {
   .desktop-only {
+    display: none;
+  }
+}
+@media screen and (min-width: 768px) {
+  .mobile-tablet-only {
     display: none;
   }
 }
@@ -54,4 +60,30 @@ header .my-artists h3 {
 .search-form .icon {
   position: relative;
   right: 10px;
+}
+.search-form .mobile-search-wrapper {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 75px;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: white;
+}
+.search-form .mobile-search-wrapper .mobile-search {
+  top: 100px;
+  position: absolute;
+}
+.search-form .mobile-search-wrapper .input-mobile {
+  position: relative;
+  height: 60px;
+  width: 210px;
+  font-size: 25px;
+}
+.search-form .mobile-search-wrapper .mobile-search-icon {
+  position: absolute;
+  top: 8%;
+  right: -27%;
+  color: #a9a9a9;
 }

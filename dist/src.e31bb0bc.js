@@ -31102,7 +31102,7 @@ var _iconsCache = {
   faYinYang: faYinYang
 };
 exports.fas = _iconsCache;
-},{}],"components/SearchForm.js":[function(require,module,exports) {
+},{}],"components/MobileSearch.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31115,6 +31115,42 @@ var _react = _interopRequireDefault(require("react"));
 var _reactFontawesome = require("@fortawesome/react-fontawesome");
 
 var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MobileSearch = function MobileSearch(props) {
+  return _react.default.createElement("div", null, _react.default.createElement("input", {
+    className: "input-mobile",
+    type: "type",
+    value: props.value,
+    onChange: props.handleChange,
+    placeholder: "Search Artists..."
+  }), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+    className: "icon search-icon mobile-tablet-only ",
+    icon: _freeSolidSvgIcons.faSearch,
+    cursor: "pointer",
+    size: "2x",
+    onClick: props.onClick
+  }));
+};
+
+var _default = MobileSearch;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js"}],"components/SearchForm.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
+var _MobileSearch = _interopRequireDefault(require("./MobileSearch"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -31148,10 +31184,12 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(SearchForm).call(this, props));
     _this.state = {
-      value: ""
+      value: "",
+      mobileSearch: false
     };
     _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.openMobileSearch = _this.openMobileSearch.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -31166,7 +31204,24 @@ function (_React$Component) {
     key: "handleSubmit",
     value: function handleSubmit(e) {
       e.preventDefault();
+      this.closeMobileSearch();
       this.props.handleSubmit(this.state.value);
+    }
+  }, {
+    key: "openMobileSearch",
+    value: function openMobileSearch() {
+      document.body.style.overflow = 'hidden';
+      this.setState({
+        mobileSearch: true
+      });
+    }
+  }, {
+    key: "closeMobileSearch",
+    value: function closeMobileSearch() {
+      document.body.style.overflow = 'scroll';
+      this.setState({
+        mobileSearch: false
+      });
     }
   }, {
     key: "render",
@@ -31174,16 +31229,39 @@ function (_React$Component) {
       return _react.default.createElement("form", {
         className: "search-form"
       }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-        className: 'icon',
+        className: "icon desktop-only",
         icon: _freeSolidSvgIcons.faSearch,
         cursor: "pointer",
         onClick: this.handleSubmit
       }), _react.default.createElement("input", {
+        className: "input-desktop desktop-only",
         type: "type",
         value: this.state.value,
         onChange: this.handleChange,
         placeholder: "Search Artists..."
-      }), _react.default.createElement("input", {
+      }), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        className: "icon mobile-tablet-only",
+        icon: _freeSolidSvgIcons.faSearch,
+        cursor: "pointer",
+        size: "2x",
+        onClick: this.openMobileSearch
+      }), this.state.mobileSearch && _react.default.createElement("div", {
+        className: "mobile-search-wrapper"
+      }, _react.default.createElement("div", {
+        className: "mobile-search"
+      }, _react.default.createElement("input", {
+        className: "input-mobile",
+        type: "type",
+        value: this.state.value,
+        onChange: this.handleChange,
+        placeholder: "Search Artists..."
+      }), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        className: "icon mobile-search-icon mobile-tablet-only ",
+        icon: _freeSolidSvgIcons.faSearch,
+        cursor: "pointer",
+        size: "3x",
+        onClick: this.handleSubmit
+      }))), _react.default.createElement("input", {
         style: {
           display: 'none'
         },
@@ -31198,7 +31276,7 @@ function (_React$Component) {
 
 var _default = SearchForm;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js"}],"components/Header.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js","./MobileSearch":"components/MobileSearch.js"}],"components/Header.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -31218,7 +31296,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Header = function Header(props) {
   return _react.default.createElement("header", null, _react.default.createElement("div", {
-    className: "my-artists"
+    className: "my-artists pointer"
   }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
     className: "icon",
     color: "white",
@@ -31227,7 +31305,8 @@ var Header = function Header(props) {
     size: "2x",
     onClick: props.showFollowed
   }), _react.default.createElement("h3", {
-    className: "desktop-only"
+    className: "desktop-only",
+    onClick: props.showFollowed
   }, "My Artists")), _react.default.createElement("h1", {
     className: "pointer",
     onClick: props.handleGoHome
@@ -32835,6 +32914,7 @@ function (_React$Component) {
     value: function showFollowed() {
       var _this2 = this;
 
+      console.log('show followed start - ', this.state.followedArtists.length);
       this.setState({
         showFollowed: true,
         followedArtistsInfo: []
