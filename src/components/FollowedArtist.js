@@ -34,7 +34,9 @@ class FollowedArtist extends React.Component {
                 {
                     this.props.info.eventsCount > 0 ?
                     <div onClick={this.seeEvents}>See Upcoming Events</div> :
-                    <div>No Events Coming Up</div>
+                    <div>
+                    <p className="is-active">No Events Coming Up</p>
+                    </div>
                 }
                 <FontAwesomeIcon
                     icon={this.state.followed ? solidHeart : regHeart}

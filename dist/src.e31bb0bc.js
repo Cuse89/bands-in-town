@@ -32443,13 +32443,9 @@ function (_React$Component) {
   _inherits(ArtistEvent, _React$Component);
 
   function ArtistEvent(props) {
-    var _this;
-
     _classCallCheck(this, ArtistEvent);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(ArtistEvent).call(this, props));
-    _this.state = {};
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(ArtistEvent).call(this, props));
   }
 
   _createClass(ArtistEvent, [{
@@ -32579,7 +32575,9 @@ function (_React$Component) {
         onClick: this.seeArtist
       }, this.props.info.name), this.props.info.eventsCount > 0 ? _react.default.createElement("div", {
         onClick: this.seeEvents
-      }, "See Upcoming Events") : _react.default.createElement("div", null, "No Events Coming Up"), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+      }, "See Upcoming Events") : _react.default.createElement("div", null, _react.default.createElement("p", {
+        className: "is-active"
+      }, "No Events Coming Up")), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
         color: "red",
         onClick: this.handleClickHeart
@@ -32904,7 +32902,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54618" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59678" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

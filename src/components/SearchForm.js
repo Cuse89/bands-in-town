@@ -16,7 +16,7 @@ class SearchForm extends React.Component {
     handleChange(e) {
         this.setState({
         value : e.target.value
-        })
+        });
     }
 
     handleSubmit(e) {
@@ -33,13 +33,9 @@ class SearchForm extends React.Component {
                     onChange = {this.handleChange}
                     placeholder = 'Search Artists...'                                  
                 />
-                <button
-                    onClick = {this.handleSubmit}
-                
-                >
+                <button onClick = {this.handleSubmit}>
                     Search
-                </button>
-            
+                </button>            
             </form>
         )
     }
