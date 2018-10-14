@@ -52,12 +52,9 @@ class Main extends React.Component {
         const self = this;
         const Http = new XMLHttpRequest();
         Http.onreadystatechange = function() {
-            console.log('status - ', this.status)
             if (this.readyState == 4 && this.status == 200) {
                 self.handleResponses(infoType, Http.responseText);            
-            } else if (this.status == 403) {
-                console.log(this.status, 'aaaaaaaaaarggggggh')
-            }  
+            }
         };
         Http.open('GET', url);
         Http.send();
@@ -184,10 +181,7 @@ class Main extends React.Component {
     handleShowArtistInfo(artist) {
         this.startSearch(artist);
         this.artistInfoPage();
-    }
-        
-        
-    
+    }      
 
     render() {
         return (

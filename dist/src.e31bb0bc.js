@@ -31197,8 +31197,7 @@ function (_React$Component) {
         type: "type",
         value: this.state.value,
         onChange: this.handleChange,
-        placeholder: "Search Artists...",
-        pattern: ".{6,}"
+        placeholder: "Search Artists..."
       }), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         className: "icon mobile-tablet-only",
         icon: _freeSolidSvgIcons.faSearch,
@@ -35680,12 +35679,8 @@ function (_React$Component) {
       var Http = new XMLHttpRequest();
 
       Http.onreadystatechange = function () {
-        console.log('status - ', this.status);
-
         if (this.readyState == 4 && this.status == 200) {
           self.handleResponses(infoType, Http.responseText);
-        } else if (this.status == 403) {
-          console.log(this.status, 'aaaaaaaaaarggggggh');
         }
       };
 
@@ -35902,7 +35897,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64542" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52177" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

@@ -21,7 +21,7 @@ const Header = (props) => (
             >My Artists
             </h3> 
         </div>         
-        <h1 className = 'pointer' onClick = {props.myArtistsPage}>Bands In Town</h1>
+        <h1 className = 'pointer' onClick = {props.myArtistsPage}>My Bands In Town</h1>
         <SearchForm
             handleSubmit = {props.handleSubmit}
             toggleMobileSearch = {props.toggleMobileSearch}

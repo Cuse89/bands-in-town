@@ -55,8 +55,7 @@ class SearchForm extends React.Component {
                     type = 'type'
                     value = {this.state.value}
                     onChange = {this.handleChange}
-                    placeholder = 'Search Artists...'
-                    pattern = ".{6,}"                               
+                    placeholder = 'Search Artists...'                              
                 />
                 <FontAwesomeIcon   
                     className = 'icon mobile-tablet-only'

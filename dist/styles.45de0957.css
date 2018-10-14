@@ -171,6 +171,7 @@ header .my-artists-header h3 {
 .artist-wrapper .artist-info-wrapper .artist-info .artist-name {
   font-size: 50px;
   margin: 15px;
+  text-align: center;
 }
 .artist-wrapper .artist-info-wrapper .artist-info .icons {
   display: flex;
