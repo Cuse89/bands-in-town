@@ -35298,10 +35298,12 @@ function (_React$Component) {
       }, "".concat(this.props.info.venue.name, ", ").concat(this.props.info.venue.city, ", ").concat(this.props.info.venue.country)), _react.default.createElement("div", {
         className: "ticket-button event-item"
       }, this.getStatus() == "Buy Tickets" || this.getStatus() == "Buy Presale Tickets" ? _react.default.createElement("a", {
-        className: "ticket-url",
+        className: "ticket-url strong",
         href: this.props.info.offers.length > 0 && this.props.info.offers[0].url,
         target: "_blank"
-      }, this.getStatus()) : _react.default.createElement("p", null, this.getStatus())));
+      }, this.getStatus()) : _react.default.createElement("p", {
+        className: "red"
+      }, this.getStatus())));
     }
   }]);
 
@@ -35383,19 +35385,32 @@ function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
-      return _react.default.createElement("div", null, _react.default.createElement("img", {
+      return _react.default.createElement("div", {
+        className: "followed-artist"
+      }, _react.default.createElement("img", {
+        className: "pointer",
         src: this.props.info.thumb,
-        alt: this.props.info.name
+        alt: this.props.info.name,
+        onClick: this.seeArtist
       }), _react.default.createElement("div", {
+        className: "followed-artist-info"
+      }, _react.default.createElement("div", {
+        className: "left"
+      }, _react.default.createElement("p", {
         className: "pointer",
         onClick: this.seeArtist
       }, this.props.info.name), this.props.info.eventsCount > 0 ? _react.default.createElement("div", {
-        onClick: this.seeEvents
-      }, "See Upcoming Events") : _react.default.createElement("div", null, "No Events Coming Up"), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        onClick: this.seeArtist
+      }, _react.default.createElement("p", {
+        className: "strong pointer"
+      }, "See Upcoming Events")) : _react.default.createElement("div", null, _react.default.createElement("p", {
+        className: "red"
+      }, "No Events Coming Up"))), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
         color: "red",
+        size: "2x",
         onClick: this.handleClickHeart
-      }));
+      })));
     }
   }]);
 
@@ -35621,7 +35636,6 @@ function (_React$Component) {
     value: function showFollowed() {
       var _this2 = this;
 
-      console.log('show followed start - ', this.state.followedArtists.length);
       this.setState({
         showFollowed: true,
         followedArtistsInfo: []
@@ -35640,11 +35654,13 @@ function (_React$Component) {
     value: function render() {
       var _this3 = this;
 
-      return _react.default.createElement("div", null, _react.default.createElement(_Header.default, {
+      return _react.default.createElement("div", {
+        className: "main-container"
+      }, _react.default.createElement(_Header.default, {
         handleSubmit: this.startSearch,
         handleGoHome: this.resetState,
         showFollowed: this.showFollowed
-      }), _react.default.createElement("div", {
+      }), !this.state.showFollowed && _react.default.createElement("div", {
         className: "main-wrapper"
       }, this.state.artistInfo.name && !this.state.showFollowed && _react.default.createElement(_ArtistInfo.default, {
         image: this.state.artistInfo.image.large,
@@ -35659,7 +35675,9 @@ function (_React$Component) {
           key: i,
           info: event
         });
-      }))), this.state.showFollowed && this.state.followedArtistsInfo.length > 0 && this.state.followedArtistsInfo.map(function (artist, i) {
+      }))), this.state.showFollowed && this.state.followedArtistsInfo.length > 0 && _react.default.createElement("div", {
+        className: "followed-artists"
+      }, this.state.followedArtistsInfo.map(function (artist, i) {
         return _react.default.createElement(_FollowedArtist.default, {
           key: i,
           info: artist,
@@ -35667,7 +35685,7 @@ function (_React$Component) {
           isArtistFollowed: _this3.isArtistFollowed,
           updateFollowedArtists: _this3.updateFollowedArtists
         });
-      }));
+      })));
     }
   }]);
 

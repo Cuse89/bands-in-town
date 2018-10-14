@@ -40,22 +40,20 @@ class ArtistEvent extends React.Component {
                 <div className = 'location event-item'>
                     {`${this.props.info.venue.name}, ${this.props.info.venue.city}, ${this.props.info.venue.country}` }
                 </div>
-                
                 <div className = 'ticket-button event-item'>
                     {
                         this.getStatus() ==  "Buy Tickets" || this.getStatus() ==  "Buy Presale Tickets" ?
                         <a
-                            className = 'ticket-url'                        
+                            className = 'ticket-url strong'                        
                             href = {this.props.info.offers.length > 0 && this.props.info.offers[0].url} target='_blank'
                         >                                       
                             {this.getStatus()}            
                         </a> :
-                        <p>
+                        <p className = 'red'>
                             {this.getStatus()}
                         </p>            
                     }
                 </div>
-            
             </div>
         )
     }

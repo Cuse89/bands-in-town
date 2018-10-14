@@ -28,24 +28,38 @@ class FollowedArtist extends React.Component {
 
     render() {
         return (
-            <div>
-                <img src={this.props.info.thumb} alt={this.props.info.name}/>
-                <div
-                    className="pointer"
-                    onClick={this.seeArtist}
-                >
-                {this.props.info.name}
-                </div>
-                {
-                    this.props.info.eventsCount > 0 ?
-                    <div onClick={this.seeEvents}>See Upcoming Events</div> :
-                    <div>No Events Coming Up</div>
-                }
-                <FontAwesomeIcon
-                    icon={this.state.followed ? solidHeart : regHeart}
-                    color='red'
-                    onClick={this.handleClickHeart}                    
-                />                
+            <div className = 'followed-artist'>
+                <img
+                    className = 'pointer'
+                    src = {this.props.info.thumb}
+                    alt={this.props.info.name}
+                    onClick = {this.seeArtist}
+                />
+                <div className = 'followed-artist-info'>
+                    <div className = 'left'>
+                        <p
+                                className = "pointer"
+                                onClick = {this.seeArtist}
+                            >
+                            {this.props.info.name}
+                            </p>                    
+                            {
+                                this.props.info.eventsCount > 0 ?
+                                <div onClick = {this.seeArtist}>
+                                    <p className = 'strong pointer'>See Upcoming Events</p>
+                                </div> :
+                                <div>
+                                    <p className = 'red'>No Events Coming Up</p>
+                                </div>
+                            }
+                    </div>
+                    <FontAwesomeIcon
+                        icon = {this.state.followed ? solidHeart : regHeart}
+                        color = 'red'
+                        size = '2x'
+                        onClick = {this.handleClickHeart}                    
+                    />  
+                </div>                              
             </div>
         )
     }

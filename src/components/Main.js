@@ -145,7 +145,6 @@ class Main extends React.Component {
     }
 
     showFollowed() {
-        console.log('show followed start - ',this.state.followedArtists.length )
         this.setState({
             showFollowed: true,
             followedArtistsInfo : []
@@ -162,46 +161,55 @@ class Main extends React.Component {
 
     render() {
         return (
-            <div>
+            <div className = 'main-container'>
                 <Header
                     handleSubmit = {this.startSearch}
                     handleGoHome = {this.resetState}
                     showFollowed = {this.showFollowed}   
                 />
-                <div className = 'main-wrapper'>
-                    {
-                        this.state.artistInfo.name && !this.state.showFollowed &&
-                        <ArtistInfo
-                            image = {this.state.artistInfo.image.large}
-                            artistName = {this.state.artistInfo.name}
-                            fbUrl = {this.state.artistInfo.fbUrl}
-                            isArtistFollowed = {this.isArtistFollowed}
-                            updateFollowedArtists = {this.updateFollowedArtists}
-                        />
-                    }
-                    <div className = 'events-wrapper'>
-                    {
-                        this.state.artistEvents.length > 0 && !this.state.showFollowed &&
-                            this.state.artistEvents.map((event, i) => {
-                            return <ArtistEvent
-                                key = {i}
-                                info = {event}
+                {
+                    !this.state.showFollowed &&
+                   <div className = 'main-wrapper'>
+                        {
+                            this.state.artistInfo.name && !this.state.showFollowed &&
+                            <ArtistInfo
+                                image = {this.state.artistInfo.image.large}
+                                artistName = {this.state.artistInfo.name}
+                                fbUrl = {this.state.artistInfo.fbUrl}
+                                isArtistFollowed = {this.isArtistFollowed}
+                                updateFollowedArtists = {this.updateFollowedArtists}
                             />
-                        })                    
-                    }
-                    </div>
-                </div>
+                        }
+                        <div className = 'events-wrapper'>
+                        {
+                            this.state.artistEvents.length > 0 && !this.state.showFollowed &&
+                                this.state.artistEvents.map((event, i) => {
+                                return <ArtistEvent
+                                    key = {i}
+                                    info = {event}
+                                />
+                            })                    
+                        }
+                        </div>
+                    </div> 
+                }
+                
                 {
                     this.state.showFollowed && this.state.followedArtistsInfo.length > 0 &&
-                    this.state.followedArtistsInfo.map((artist, i) => {
-                        return <FollowedArtist
-                            key = {i}
-                            info = {artist}
-                            handleSubmit = {this.startSearch}
-                            isArtistFollowed = {this.isArtistFollowed}
-                            updateFollowedArtists = {this.updateFollowedArtists}         
-                        />
-                    })
+                    <div className = 'followed-artists'>
+                        {
+                            this.state.followedArtistsInfo.map((artist, i) => {
+                                return <FollowedArtist
+                                    key = {i}
+                                    info = {artist}
+                                    handleSubmit = {this.startSearch}
+                                    isArtistFollowed = {this.isArtistFollowed}
+                                    updateFollowedArtists = {this.updateFollowedArtists}         
+                                />
+                            })
+                        }
+                        
+                    </div>
                 }
             </div>
         )

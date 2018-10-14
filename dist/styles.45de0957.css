@@ -25,8 +25,11 @@ button:disabled {
 form {
   margin-bottom: 0;
 }
-.is-active {
+.strong {
   font-weight: bold;
+}
+.red {
+  color: red;
 }
 .pointer:hover {
   cursor: pointer;
@@ -54,13 +57,9 @@ form {
     flex-direction: column;
   }
 }
-@media screen and (min-width: 768px) {
-  .main-wrapper {
-    flex-direction: row;
-  }
-}
 .main-wrapper .events-wrapper {
   width: 100%;
+  margin-top: 10px;
 }
 @media screen and (min-width: 768px) {
   .main-wrapper .events-wrapper {
@@ -202,11 +201,52 @@ header .my-artists h3 {
   font-weight: bold;
   text-decoration: none;
 }
-.event .ticket-button p {
-  color: red;
-}
 @media screen and (max-width: 650px) {
   .event .event-item {
     margin: 5 0 5 0;
+  }
+}
+.followed-artists {
+  margin-top: 80px;
+}
+.followed-artists .followed-artist {
+  border: 2px #81ce2c solid;
+  border-radius: 45px;
+  margin: 10px;
+  display: flex;
+}
+.followed-artists .followed-artist img {
+  width: 120px;
+  height: 120px;
+  border-radius: 10px;
+  margin-left: 40px;
+}
+@media screen and (max-width: 768px) {
+  .followed-artists .followed-artist img {
+    width: 80px;
+    height: 80px;
+  }
+}
+.followed-artists .followed-artist .followed-artist-info {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 75px;
+}
+@media screen and (max-width: 480px) {
+  .followed-artists .followed-artist .followed-artist-info {
+    margin: 0 10px;
+  }
+}
+.followed-artists .followed-artist .followed-artist-info .left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 40px;
+}
+@media screen and (max-width: 480px) {
+  .followed-artists .followed-artist .followed-artist-info .left {
+    text-align: center;
   }
 }
