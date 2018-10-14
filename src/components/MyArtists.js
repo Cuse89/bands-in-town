@@ -15,6 +15,11 @@ class MyArtists extends React.Component {
         return (
             <div className = 'my-artists'>
                 {
+                    this.state.myArtistsInfo.length > 0 ?
+                    <h1 className = 'message'>My Artists</h1> :
+                    <h2 className = 'message'>You have no saved artists... Search now and start following!</h2>           
+                }
+                {
                     this.state.myArtistsInfo.map((artist, i) => {
                         return <MyArtist
                             key = {i}

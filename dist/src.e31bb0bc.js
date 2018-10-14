@@ -31255,20 +31255,19 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var Header = function Header(props) {
   return _react.default.createElement("header", null, _react.default.createElement("div", {
-    className: "my-artists-header pointer"
+    className: "my-artists-header pointer",
+    onClick: props.myArtistsPage
   }, _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
     className: "icon",
     color: "white",
     icon: _freeSolidSvgIcons.faUser,
     cursor: "pointer",
-    size: "2x",
-    onClick: props.myArtistsPage
+    size: "2x"
   }), _react.default.createElement("h3", {
-    className: "desktop-only",
-    onClick: props.myArtistsPage
+    className: "desktop-only"
   }, "My Artists")), _react.default.createElement("h1", {
     className: "pointer",
-    onClick: props.handleGoHome
+    onClick: props.myArtistsPage
   }, "Bands In Town"), _react.default.createElement(_SearchForm.default, {
     handleSubmit: props.handleSubmit,
     toggleMobileSearch: props.toggleMobileSearch,
@@ -35474,7 +35473,11 @@ function (_React$Component) {
 
       return _react.default.createElement("div", {
         className: "my-artists"
-      }, this.state.myArtistsInfo.map(function (artist, i) {
+      }, this.state.myArtistsInfo.length > 0 ? _react.default.createElement("h1", {
+        className: "message"
+      }, "My Artists") : _react.default.createElement("h2", {
+        className: "message"
+      }, "You have no saved artists... Search now and start following!"), this.state.myArtistsInfo.map(function (artist, i) {
         return _react.default.createElement(_MyArtist.default, {
           key: i,
           info: artist,
@@ -35553,15 +35556,13 @@ function (_React$Component) {
       artistEvents: [],
       myArtistsInfo: [],
       myArtists: _this.getMyArtists(),
-      homePage: true,
-      myArtistsPage: false,
+      myArtistsPage: true,
       artistInfoPage: false
     };
     _this.startSearch = _this.startSearch.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.isArtistFollowed = _this.isArtistFollowed.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.updateMyArtists = _this.updateMyArtists.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.myArtistsPage = _this.myArtistsPage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.goHome = _this.goHome.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.artistInfoPage = _this.artistInfoPage.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.toggleMobileSearch = _this.toggleMobileSearch.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     _this.handleShowArtistInfo = _this.handleShowArtistInfo.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -35723,17 +35724,8 @@ function (_React$Component) {
     value: function myArtistsPage() {
       this.setState({
         myArtistsPage: true,
-        homePage: false,
-        artistInfoPage: false
-      });
-    }
-  }, {
-    key: "goHome",
-    value: function goHome() {
-      this.setState({
-        homePage: true,
-        myArtistsPage: false,
-        artistInfoPage: false
+        artistInfoPage: false,
+        mobileSearch: false
       });
     }
   }, {
@@ -35741,8 +35733,8 @@ function (_React$Component) {
     value: function artistInfoPage() {
       this.setState({
         artistInfoPage: true,
-        homePage: false,
-        myArtistsPage: false
+        myArtistsPage: false,
+        mobileSearch: false
       });
     }
   }, {
@@ -35755,8 +35747,8 @@ function (_React$Component) {
   }, {
     key: "handleShowArtistInfo",
     value: function handleShowArtistInfo(artist) {
-      this.artistInfoPage();
       this.startSearch(artist);
+      this.artistInfoPage();
     }
   }, {
     key: "render",
@@ -35765,11 +35757,15 @@ function (_React$Component) {
         className: "main-container"
       }, _react.default.createElement(_Header.default, {
         handleSubmit: this.handleShowArtistInfo,
-        handleGoHome: this.goHome,
         myArtistsPage: this.myArtistsPage,
         toggleMobileSearch: this.toggleMobileSearch,
         mobileSearch: this.state.mobileSearch
-      }), !this.state.myArtistsPage && _react.default.createElement("div", {
+      }), this.state.myArtistsPage && this.state.myArtistsInfo.length == this.state.myArtists.length && _react.default.createElement(_MyArtists.default, {
+        myArtistsInfo: this.state.myArtistsInfo,
+        handleSubmit: this.handleShowArtistInfo,
+        isArtistFollowed: this.isArtistFollowed,
+        updateMyArtists: this.updateMyArtists
+      }), this.state.artistInfoPage && _react.default.createElement("div", {
         className: "main-wrapper"
       }, this.state.artistInfo.name && this.state.artistInfoPage && _react.default.createElement(_ArtistInfo.default, {
         image: this.state.artistInfo.image.large,
@@ -35779,17 +35775,16 @@ function (_React$Component) {
         updateMyArtists: this.updateMyArtists
       }), _react.default.createElement("div", {
         className: "events-wrapper"
-      }, this.state.artistEvents.length > 0 && this.state.artistInfoPage && this.state.artistEvents.map(function (event, i) {
+      }, this.state.artistEvents.length > 0 ? _react.default.createElement("h1", {
+        className: "message"
+      }, "Upcoming Events") : _react.default.createElement("h2", {
+        className: "message"
+      }, "No Events Coming Up"), this.state.artistEvents.length > 0 && this.state.artistEvents.map(function (event, i) {
         return _react.default.createElement(_ArtistEvent.default, {
           key: i,
           info: event
         });
-      }))), this.state.myArtistsPage && this.state.myArtistsInfo.length > 0 && _react.default.createElement(_MyArtists.default, {
-        myArtistsInfo: this.state.myArtistsInfo,
-        handleSubmit: this.handleShowArtistInfo,
-        isArtistFollowed: this.isArtistFollowed,
-        updateMyArtists: this.updateMyArtists
-      }));
+      }))));
     }
   }]);
 

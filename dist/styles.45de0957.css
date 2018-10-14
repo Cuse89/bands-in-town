@@ -71,6 +71,9 @@ form {
 .main-wrapper .events-wrapper a {
   color: #364051;
 }
+.main-wrapper .events-wrapper .message {
+  margin-left: 20px;
+}
 header {
   width: 100%;
   position: fixed;
@@ -209,6 +212,13 @@ header .my-artists-header h3 {
 }
 .my-artists {
   margin-top: 80px;
+}
+.my-artists .message {
+  text-align: center;
+  margin-top: 110px;
+  margin-left: 50px;
+  margin-right: 50px;
+  line-height: 1.5;
 }
 .my-artists .my-artist {
   border: 2px #81ce2c solid;

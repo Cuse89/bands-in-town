@@ -13,8 +13,7 @@ class Main extends React.Component {
             artistEvents: [],
             myArtistsInfo: [],
             myArtists: this.getMyArtists(),
-            homePage: true,
-            myArtistsPage: false,
+            myArtistsPage: true,
             artistInfoPage: false
         }  
 
@@ -22,7 +21,6 @@ class Main extends React.Component {
         this.isArtistFollowed = this.isArtistFollowed.bind(this);
         this.updateMyArtists = this.updateMyArtists.bind(this);
         this.myArtistsPage = this.myArtistsPage.bind(this);
-        this.goHome = this.goHome.bind(this);
         this.artistInfoPage = this.artistInfoPage.bind(this);
         this.toggleMobileSearch = this.toggleMobileSearch.bind(this);
         this.handleShowArtistInfo = this.handleShowArtistInfo.bind(this);
@@ -162,24 +160,16 @@ class Main extends React.Component {
     myArtistsPage() {
         this.setState({
             myArtistsPage: true,
-            homePage: false,
-            artistInfoPage: false
-        });
-    }
-
-    goHome() {
-        this.setState({
-            homePage: true,
-            myArtistsPage: false,
-            artistInfoPage: false
+            artistInfoPage: false,
+            mobileSearch: false
         });
     }
 
     artistInfoPage() {
         this.setState({
             artistInfoPage: true,
-            homePage: false,
-            myArtistsPage: false
+            myArtistsPage: false,
+            mobileSearch: false
         });
     }
 
@@ -190,8 +180,8 @@ class Main extends React.Component {
     }
 
     handleShowArtistInfo(artist) {
-        this.artistInfoPage();
         this.startSearch(artist);
+        this.artistInfoPage();
     }
         
         
@@ -202,13 +192,21 @@ class Main extends React.Component {
             <div className = 'main-container'>
                 <Header
                     handleSubmit = {this.handleShowArtistInfo}
-                    handleGoHome = {this.goHome}
                     myArtistsPage = {this.myArtistsPage}
                     toggleMobileSearch = {this.toggleMobileSearch}
                     mobileSearch = {this.state.mobileSearch}
                 />
                 {
-                    !this.state.myArtistsPage &&
+                    this.state.myArtistsPage && this.state.myArtistsInfo.length == this.state.myArtists.length &&
+                    <MyArtists
+                        myArtistsInfo = {this.state.myArtistsInfo}
+                        handleSubmit = {this.handleShowArtistInfo}
+                        isArtistFollowed = {this.isArtistFollowed}
+                        updateMyArtists = {this.updateMyArtists}                   
+                    />
+                }
+                {
+                    this.state.artistInfoPage &&
                    <div className = 'main-wrapper'>
                         {
                             this.state.artistInfo.name && this.state.artistInfoPage &&
@@ -222,7 +220,12 @@ class Main extends React.Component {
                         }
                         <div className = 'events-wrapper'>
                         {
-                            this.state.artistEvents.length > 0 && this.state.artistInfoPage &&
+                            this.state.artistEvents.length > 0 ?
+                            <h1 className = 'message'>Upcoming Events</h1> :
+                            <h2 className = 'message'>No Events Coming Up</h2>
+                        }
+                        {
+                            this.state.artistEvents.length > 0 && 
                                 this.state.artistEvents.map((event, i) => {
                                 return <ArtistEvent
                                     key = {i}
@@ -232,16 +235,6 @@ class Main extends React.Component {
                         }
                         </div>
                     </div> 
-                }
-                
-                {
-                    this.state.myArtistsPage && this.state.myArtistsInfo.length > 0 &&
-                    <MyArtists
-                        myArtistsInfo = {this.state.myArtistsInfo}
-                        handleSubmit = {this.handleShowArtistInfo}
-                        isArtistFollowed = {this.isArtistFollowed}
-                        updateMyArtists = {this.updateMyArtists}                   
-                    />
                 }
             </div>
         )
