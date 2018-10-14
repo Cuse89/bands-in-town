@@ -55,7 +55,8 @@ class SearchForm extends React.Component {
                     type = 'type'
                     value = {this.state.value}
                     onChange = {this.handleChange}
-                    placeholder = 'Search Artists...'                                  
+                    placeholder = 'Search Artists...'
+                    pattern = ".{6,}"                               
                 />
                 <FontAwesomeIcon   
                     className = 'icon mobile-tablet-only'
@@ -85,13 +86,18 @@ class SearchForm extends React.Component {
                         </div>
                     </div>                    
                 }
+
+                {
+                    this.state.value.length > 0 &&
+                    <input
+                        style = {{display: 'none'}}
+                        type = 'submit'
+                        onClick = {this.handleSubmit}
+                    >
+                    </input>
+                }
                 
-                <input
-                    style = {{display: 'none'}}
-                    type = 'submit'
-                    onClick = {this.handleSubmit}
-                >
-                </input>
+                
             </form>
         )
     }

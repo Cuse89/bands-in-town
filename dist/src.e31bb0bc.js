@@ -31197,7 +31197,8 @@ function (_React$Component) {
         type: "type",
         value: this.state.value,
         onChange: this.handleChange,
-        placeholder: "Search Artists..."
+        placeholder: "Search Artists...",
+        pattern: ".{6,}"
       }), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
         className: "icon mobile-tablet-only",
         icon: _freeSolidSvgIcons.faSearch,
@@ -31220,7 +31221,7 @@ function (_React$Component) {
         cursor: "pointer",
         size: "3x",
         onClick: this.handleSubmit
-      }))), _react.default.createElement("input", {
+      }))), this.state.value.length > 0 && _react.default.createElement("input", {
         style: {
           display: 'none'
         },
@@ -32359,7 +32360,193 @@ var _iconsCache = {
   faWindowRestore: faWindowRestore
 };
 exports.far = _iconsCache;
-},{}],"../node_modules/@fortawesome/free-brands-svg-icons/index.es.js":[function(require,module,exports) {
+},{}],"components/MyArtist.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _reactFontawesome = require("@fortawesome/react-fontawesome");
+
+var _freeRegularSvgIcons = require("@fortawesome/free-regular-svg-icons");
+
+var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+var MyArtist =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MyArtist, _React$Component);
+
+  function MyArtist(props) {
+    var _this;
+
+    _classCallCheck(this, MyArtist);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyArtist).call(this, props));
+    _this.state = {
+      followed: _this.props.isArtistFollowed(_this.props.info.name) ? true : false,
+      // cache info, to allow user to unlike and relike, and obtain info again
+      cachedInfo: _this.props.info
+    };
+    _this.seeArtist = _this.seeArtist.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.handleClickHeart = _this.handleClickHeart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
+  }
+
+  _createClass(MyArtist, [{
+    key: "seeArtist",
+    value: function seeArtist() {
+      this.props.handleSubmit(this.state.cachedInfo.name);
+    }
+  }, {
+    key: "handleClickHeart",
+    value: function handleClickHeart() {
+      this.props.updateMyArtists(this.state.cachedInfo.name);
+      this.setState({
+        followed: !this.state.followed
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      return _react.default.createElement("div", {
+        className: "my-artist"
+      }, _react.default.createElement("img", {
+        className: "pointer",
+        src: this.props.info.thumb,
+        alt: this.props.info.name,
+        onClick: this.seeArtist
+      }), _react.default.createElement("div", {
+        className: "my-artist-info"
+      }, _react.default.createElement("div", {
+        className: "left"
+      }, _react.default.createElement("p", {
+        className: "pointer artist-name",
+        onClick: this.seeArtist
+      }, this.props.info.name), this.props.info.eventsCount > 0 ? _react.default.createElement("div", {
+        onClick: this.seeArtist
+      }, _react.default.createElement("p", {
+        className: "strong pointer"
+      }, "See Upcoming Events")) : _react.default.createElement("div", null, _react.default.createElement("p", {
+        className: "red"
+      }, "No Events Coming Up"))), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
+        color: "red",
+        size: "2x",
+        cursor: "pointer",
+        onClick: this.handleClickHeart
+      })));
+    }
+  }]);
+
+  return MyArtist;
+}(_react.default.Component);
+
+var _default = MyArtist;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-regular-svg-icons":"../node_modules/@fortawesome/free-regular-svg-icons/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js"}],"components/MyArtists.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var _react = _interopRequireDefault(require("react"));
+
+var _MyArtist = _interopRequireDefault(require("./MyArtist"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+var MyArtists =
+/*#__PURE__*/
+function (_React$Component) {
+  _inherits(MyArtists, _React$Component);
+
+  function MyArtists(props) {
+    var _this;
+
+    _classCallCheck(this, MyArtists);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyArtists).call(this, props));
+    _this.state = {
+      // cache info so MyArtist component isnt being updated according to Main state
+      myArtistsInfo: _this.props.myArtistsInfo
+    };
+    return _this;
+  }
+
+  _createClass(MyArtists, [{
+    key: "render",
+    value: function render() {
+      var _this2 = this;
+
+      return _react.default.createElement("div", {
+        className: "my-artists"
+      }, this.state.myArtistsInfo.length > 0 ? _react.default.createElement("h1", {
+        className: "message"
+      }, "My Artists") : _react.default.createElement("h2", {
+        className: "message"
+      }, "You have no saved artists... Search now and start following!"), this.state.myArtistsInfo.map(function (artist, i) {
+        return _react.default.createElement(_MyArtist.default, {
+          key: i,
+          info: artist,
+          handleSubmit: _this2.props.handleSubmit,
+          isArtistFollowed: _this2.props.isArtistFollowed,
+          updateMyArtists: _this2.props.updateMyArtists
+        });
+      }));
+    }
+  }]);
+
+  return MyArtists;
+}(_react.default.Component);
+
+var _default = MyArtists;
+exports.default = _default;
+},{"react":"../node_modules/react/index.js","./MyArtist":"components/MyArtist.js"}],"../node_modules/@fortawesome/free-brands-svg-icons/index.es.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35308,7 +35495,7 @@ function (_React$Component) {
 
 var _default = ArtistEvent;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js"}],"components/MyArtist.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js"}],"components/ArtistPage.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35318,11 +35505,9 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _reactFontawesome = require("@fortawesome/react-fontawesome");
+var _ArtistInfo = _interopRequireDefault(require("./ArtistInfo"));
 
-var _freeRegularSvgIcons = require("@fortawesome/free-regular-svg-icons");
-
-var _freeSolidSvgIcons = require("@fortawesome/free-solid-svg-icons");
+var _ArtistEvent = _interopRequireDefault(require("./ArtistEvent"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35336,165 +35521,57 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-var MyArtist =
+var ArtistPage =
 /*#__PURE__*/
 function (_React$Component) {
-  _inherits(MyArtist, _React$Component);
+  _inherits(ArtistPage, _React$Component);
 
-  function MyArtist(props) {
-    var _this;
+  function ArtistPage(props) {
+    _classCallCheck(this, ArtistPage);
 
-    _classCallCheck(this, MyArtist);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyArtist).call(this, props));
-    _this.state = {
-      followed: _this.props.isArtistFollowed(_this.props.info.name) ? true : false,
-      // cache info, to allow user to unlike and relike, and obtain info again
-      cachedInfo: _this.props.info
-    };
-    _this.seeArtist = _this.seeArtist.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    _this.handleClickHeart = _this.handleClickHeart.bind(_assertThisInitialized(_assertThisInitialized(_this)));
-    return _this;
+    return _possibleConstructorReturn(this, _getPrototypeOf(ArtistPage).call(this, props));
   }
 
-  _createClass(MyArtist, [{
-    key: "seeArtist",
-    value: function seeArtist() {
-      this.props.handleSubmit(this.state.cachedInfo.name);
-    }
-  }, {
-    key: "handleClickHeart",
-    value: function handleClickHeart() {
-      this.props.updateMyArtists(this.state.cachedInfo.name);
-      this.setState({
-        followed: !this.state.followed
-      });
-    }
-  }, {
+  _createClass(ArtistPage, [{
     key: "render",
     value: function render() {
       return _react.default.createElement("div", {
-        className: "my-artist"
-      }, _react.default.createElement("img", {
-        className: "pointer",
-        src: this.props.info.thumb,
-        alt: this.props.info.name,
-        onClick: this.seeArtist
+        className: "main-wrapper"
+      }, this.props.artistInfo.name && this.props.artistInfoPage && _react.default.createElement(_ArtistInfo.default, {
+        image: this.props.artistInfo.image.large,
+        artistName: this.props.artistInfo.name,
+        fbUrl: this.props.artistInfo.fbUrl,
+        isArtistFollowed: this.props.isArtistFollowed,
+        updateMyArtists: this.props.updateMyArtists
       }), _react.default.createElement("div", {
-        className: "my-artist-info"
-      }, _react.default.createElement("div", {
-        className: "left"
-      }, _react.default.createElement("p", {
-        className: "pointer artist-name",
-        onClick: this.seeArtist
-      }, this.props.info.name), this.props.info.eventsCount > 0 ? _react.default.createElement("div", {
-        onClick: this.seeArtist
-      }, _react.default.createElement("p", {
-        className: "strong pointer"
-      }, "See Upcoming Events")) : _react.default.createElement("div", null, _react.default.createElement("p", {
-        className: "red"
-      }, "No Events Coming Up"))), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
-        icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
-        color: "red",
-        size: "2x",
-        cursor: "pointer",
-        onClick: this.handleClickHeart
+        className: "events-wrapper"
+      }, this.props.artistEvents.length > 0 ? _react.default.createElement("h1", {
+        className: "message"
+      }, "Upcoming Events") : _react.default.createElement("h2", {
+        className: "message"
+      }, "No Events Coming Up"), this.props.artistEvents.length > 0 && this.props.artistEvents.map(function (event, i) {
+        return _react.default.createElement(_ArtistEvent.default, {
+          key: i,
+          info: event
+        });
       })));
     }
   }]);
 
-  return MyArtist;
+  return ArtistPage;
 }(_react.default.Component);
 
-var _default = MyArtist;
+var _default = ArtistPage;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","@fortawesome/react-fontawesome":"../node_modules/@fortawesome/react-fontawesome/index.es.js","@fortawesome/free-regular-svg-icons":"../node_modules/@fortawesome/free-regular-svg-icons/index.es.js","@fortawesome/free-solid-svg-icons":"../node_modules/@fortawesome/free-solid-svg-icons/index.es.js"}],"components/MyArtists.js":[function(require,module,exports) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = void 0;
-
-var _react = _interopRequireDefault(require("react"));
-
-var _MyArtist = _interopRequireDefault(require("./MyArtist"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
-
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
-function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
-
-function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-var MyArtists =
-/*#__PURE__*/
-function (_React$Component) {
-  _inherits(MyArtists, _React$Component);
-
-  function MyArtists(props) {
-    var _this;
-
-    _classCallCheck(this, MyArtists);
-
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(MyArtists).call(this, props));
-    _this.state = {
-      // cache info so MyArtist component isnt being updated according to Main state
-      myArtistsInfo: _this.props.myArtistsInfo
-    };
-    return _this;
-  }
-
-  _createClass(MyArtists, [{
-    key: "render",
-    value: function render() {
-      var _this2 = this;
-
-      return _react.default.createElement("div", {
-        className: "my-artists"
-      }, this.state.myArtistsInfo.length > 0 ? _react.default.createElement("h1", {
-        className: "message"
-      }, "My Artists") : _react.default.createElement("h2", {
-        className: "message"
-      }, "You have no saved artists... Search now and start following!"), this.state.myArtistsInfo.map(function (artist, i) {
-        return _react.default.createElement(_MyArtist.default, {
-          key: i,
-          info: artist,
-          handleSubmit: _this2.props.handleSubmit,
-          isArtistFollowed: _this2.props.isArtistFollowed,
-          updateMyArtists: _this2.props.updateMyArtists
-        });
-      }));
-    }
-  }]);
-
-  return MyArtists;
-}(_react.default.Component);
-
-var _default = MyArtists;
-exports.default = _default;
-},{"react":"../node_modules/react/index.js","./MyArtist":"components/MyArtist.js"}],"components/Main.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./ArtistInfo":"components/ArtistInfo.js","./ArtistEvent":"components/ArtistEvent.js"}],"components/Main.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -35506,11 +35583,9 @@ var _react = _interopRequireDefault(require("react"));
 
 var _Header = _interopRequireDefault(require("./Header"));
 
-var _ArtistInfo = _interopRequireDefault(require("./ArtistInfo"));
-
-var _ArtistEvent = _interopRequireDefault(require("./ArtistEvent"));
-
 var _MyArtists = _interopRequireDefault(require("./MyArtists"));
+
+var _ArtistPage = _interopRequireDefault(require("./ArtistPage"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -35605,8 +35680,12 @@ function (_React$Component) {
       var Http = new XMLHttpRequest();
 
       Http.onreadystatechange = function () {
+        console.log('status - ', this.status);
+
         if (this.readyState == 4 && this.status == 200) {
           self.handleResponses(infoType, Http.responseText);
+        } else if (this.status == 403) {
+          console.log(this.status, 'aaaaaaaaaarggggggh');
         }
       };
 
@@ -35765,26 +35844,13 @@ function (_React$Component) {
         handleSubmit: this.handleShowArtistInfo,
         isArtistFollowed: this.isArtistFollowed,
         updateMyArtists: this.updateMyArtists
-      }), this.state.artistInfoPage && _react.default.createElement("div", {
-        className: "main-wrapper"
-      }, this.state.artistInfo.name && this.state.artistInfoPage && _react.default.createElement(_ArtistInfo.default, {
-        image: this.state.artistInfo.image.large,
-        artistName: this.state.artistInfo.name,
-        fbUrl: this.state.artistInfo.fbUrl,
+      }), this.state.artistInfoPage && _react.default.createElement(_ArtistPage.default, {
+        artistInfo: this.state.artistInfo,
+        artistInfoPage: this.state.artistInfoPage,
         isArtistFollowed: this.isArtistFollowed,
-        updateMyArtists: this.updateMyArtists
-      }), _react.default.createElement("div", {
-        className: "events-wrapper"
-      }, this.state.artistEvents.length > 0 ? _react.default.createElement("h1", {
-        className: "message"
-      }, "Upcoming Events") : _react.default.createElement("h2", {
-        className: "message"
-      }, "No Events Coming Up"), this.state.artistEvents.length > 0 && this.state.artistEvents.map(function (event, i) {
-        return _react.default.createElement(_ArtistEvent.default, {
-          key: i,
-          info: event
-        });
-      }))));
+        updateMyArtists: this.updateMyArtists,
+        artistEvents: this.state.artistEvents
+      }));
     }
   }]);
 
@@ -35793,7 +35859,7 @@ function (_React$Component) {
 
 var _default = Main;
 exports.default = _default;
-},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./ArtistInfo":"components/ArtistInfo.js","./ArtistEvent":"components/ArtistEvent.js","./MyArtists":"components/MyArtists.js"}],"index.js":[function(require,module,exports) {
+},{"react":"../node_modules/react/index.js","./Header":"components/Header.js","./MyArtists":"components/MyArtists.js","./ArtistPage":"components/ArtistPage.js"}],"index.js":[function(require,module,exports) {
 "use strict";
 
 var _react = _interopRequireDefault(require("react"));
@@ -35836,7 +35902,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50434" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "64542" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

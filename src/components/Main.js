@@ -1,8 +1,7 @@
 import React from 'react';
 import Header from './Header';
-import ArtistInfo from './ArtistInfo';
-import ArtistEvent from './ArtistEvent';
 import MyArtists from './MyArtists';
+import ArtistPage from './ArtistPage';
 
 class Main extends React.Component {
     constructor(props) {
@@ -53,9 +52,12 @@ class Main extends React.Component {
         const self = this;
         const Http = new XMLHttpRequest();
         Http.onreadystatechange = function() {
+            console.log('status - ', this.status)
             if (this.readyState == 4 && this.status == 200) {
                 self.handleResponses(infoType, Http.responseText);            
-            }            
+            } else if (this.status == 403) {
+                console.log(this.status, 'aaaaaaaaaarggggggh')
+            }  
         };
         Http.open('GET', url);
         Http.send();
@@ -202,39 +204,19 @@ class Main extends React.Component {
                         myArtistsInfo = {this.state.myArtistsInfo}
                         handleSubmit = {this.handleShowArtistInfo}
                         isArtistFollowed = {this.isArtistFollowed}
-                        updateMyArtists = {this.updateMyArtists}                   
+                        updateMyArtists = {this.updateMyArtists}                 
                     />
                 }
                 {
                     this.state.artistInfoPage &&
-                   <div className = 'main-wrapper'>
-                        {
-                            this.state.artistInfo.name && this.state.artistInfoPage &&
-                            <ArtistInfo
-                                image = {this.state.artistInfo.image.large}
-                                artistName = {this.state.artistInfo.name}
-                                fbUrl = {this.state.artistInfo.fbUrl}
-                                isArtistFollowed = {this.isArtistFollowed}
-                                updateMyArtists = {this.updateMyArtists}
-                            />
-                        }
-                        <div className = 'events-wrapper'>
-                        {
-                            this.state.artistEvents.length > 0 ?
-                            <h1 className = 'message'>Upcoming Events</h1> :
-                            <h2 className = 'message'>No Events Coming Up</h2>
-                        }
-                        {
-                            this.state.artistEvents.length > 0 && 
-                                this.state.artistEvents.map((event, i) => {
-                                return <ArtistEvent
-                                    key = {i}
-                                    info = {event}
-                                />
-                            })                    
-                        }
-                        </div>
-                    </div> 
+                    <ArtistPage
+                        artistInfo = {this.state.artistInfo}
+                        artistInfoPage = {this.state.artistInfoPage}
+                        isArtistFollowed = {this.isArtistFollowed}
+                        updateMyArtists = {this.updateMyArtists}
+                        artistEvents = {this.state.artistEvents}                    
+                    />
+                   
                 }
             </div>
         )
