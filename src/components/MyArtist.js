@@ -54,6 +54,7 @@ class MyArtist extends React.Component {
                         }
                     </div>
                     <FontAwesomeIcon
+                        className = 'icon'
                         icon = {this.state.followed ? solidHeart : regHeart}
                         color = 'red'
                         size = '2x'

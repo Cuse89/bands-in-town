@@ -1,7 +1,7 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import Main from '../components/Main';
-import {info, eventsSoldOut, myArtistsInfo} from './mockData/Main';
+import {info, eventsSoldOut, myArtistsInfo} from './mockData';
 
 let wrapper;
 
@@ -17,7 +17,6 @@ beforeEach(() => {
     });
 });
 
-
 test('it should handle sortMyArtistsInfo correctly', () => {
     wrapper.instance().sortMyArtistsInfo(info);
     expect(wrapper.state('myArtistsInfo')).toHaveLength(1);
@@ -27,7 +26,6 @@ test('it should handle sortMyArtistsInfo correctly', () => {
         eventsCount: 2
     }]);
 });
-
 
 test('it should handle sortArtistInfo correctly', () => {
     wrapper.instance().sortArtistInfo(info);
@@ -80,7 +78,5 @@ test('it should handle updateMyArtists correctly - remove an artist', () => {
         "eventsCount": 14,
         "name": "Blossoms",
         "thumb": "https://s3.amazonaws.com/bit-photos/thumb/8508883.jpeg"
-        }]);
-    });
-
-
+    }]);
+});

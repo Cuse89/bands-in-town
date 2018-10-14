@@ -31221,6 +31221,7 @@ function (_React$Component) {
         size: "3x",
         onClick: this.handleSubmit
       }))), this.state.value.length > 0 && _react.default.createElement("input", {
+        className: "hidden-input",
         style: {
           display: 'none'
         },
@@ -31268,7 +31269,7 @@ var Header = function Header(props) {
   }, "My Artists")), _react.default.createElement("h1", {
     className: "pointer",
     onClick: props.myArtistsPage
-  }, "Bands In Town"), _react.default.createElement(_SearchForm.default, {
+  }, "My Bands In Town"), _react.default.createElement(_SearchForm.default, {
     handleSubmit: props.handleSubmit,
     toggleMobileSearch: props.toggleMobileSearch,
     mobileSearch: props.mobileSearch
@@ -32453,6 +32454,7 @@ function (_React$Component) {
       }, "See Upcoming Events")) : _react.default.createElement("div", null, _react.default.createElement("p", {
         className: "red"
       }, "No Events Coming Up"))), _react.default.createElement(_reactFontawesome.FontAwesomeIcon, {
+        className: "icon",
         icon: this.state.followed ? _freeSolidSvgIcons.faHeart : _freeRegularSvgIcons.faHeart,
         color: "red",
         size: "2x",
@@ -32529,6 +32531,7 @@ function (_React$Component) {
       }, "My Artists") : _react.default.createElement("h2", {
         className: "message"
       }, "You have no saved artists... Search now and start following!"), this.state.myArtistsInfo.map(function (artist, i) {
+        console.log(artist);
         return _react.default.createElement(_MyArtist.default, {
           key: i,
           info: artist,
@@ -35897,7 +35900,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52177" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51965" + '/');
 
   ws.onmessage = function (event) {
     var data = JSON.parse(event.data);

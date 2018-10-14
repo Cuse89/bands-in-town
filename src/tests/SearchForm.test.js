@@ -26,10 +26,24 @@ beforeEach(() => {
     
 
 });
-// Cant work out how to do the test
+// Nodes are not being found
+
 // test('it should handle handleChange', () => {
 //     const input = component.find('input');
 //     input.simulate('change', { target: { value: 'Hello' } });
 //     expect(component.state('value')).toEqual('Hello');
 
 // });
+
+// test('it should handle handleSubmit', () => {
+//     wrapper.setState({
+//         value: 'test'
+//     });
+//     const input = component.find('input.hidden-input');
+//     input.simulate('click');
+//     expect(handleSubmit).toHaveBeenCalled()
+// });
+
+test('', () => {
+
+});

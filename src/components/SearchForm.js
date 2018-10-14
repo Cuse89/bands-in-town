@@ -89,6 +89,7 @@ class SearchForm extends React.Component {
                 {
                     this.state.value.length > 0 &&
                     <input
+                        className = 'hidden-input'
                         style = {{display: 'none'}}
                         type = 'submit'
                         onClick = {this.handleSubmit}
