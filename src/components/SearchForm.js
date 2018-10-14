@@ -7,8 +7,7 @@ class SearchForm extends React.Component {
         super(props)
 
         this.state = {
-            value : "",
-            mobileSearch : false   
+            value : "" 
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -31,16 +30,14 @@ class SearchForm extends React.Component {
 
     openMobileSearch() {
         document.body.style.overflow = 'hidden';
-        this.setState({
-            mobileSearch: true
-        });             
+        this.props.toggleMobileSearch(true);
+           
     }
 
     closeMobileSearch() {
         document.body.style.overflow = 'scroll';
-        this.setState({
-            mobileSearch: false
-        });
+        this.props.toggleMobileSearch(false);
+
     }
 
         
@@ -68,7 +65,7 @@ class SearchForm extends React.Component {
                     onClick = {this.openMobileSearch}               
                 />
                 {
-                    this.state.mobileSearch &&
+                    this.props.mobileSearch &&
                     <div className = 'mobile-search-wrapper'>
                         <div className = 'mobile-search'>
                             <input

@@ -22,7 +22,7 @@ class ArtistInfo extends React.Component {
     }
 
     handleClickHeart() {
-        this.props.updateFollowedArtists(this.props.artistName);
+        this.props.updateMyArtists(this.props.artistName);
         this.setState({
             followed: !this.state.followed
         });
