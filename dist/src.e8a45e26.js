@@ -49,4 +49,4 @@ var e=arguments[3];Object.defineProperty(exports,"__esModule",{value:!0}),export
 },{"react":"1n8/","./Header":"RzfG","./MyArtists":"najw","./ArtistPage":"6e31"}],"Focm":[function(require,module,exports) {
 "use strict";var e=n(require("react")),r=require("react-dom"),t=n(require("./components/Main"));function n(e){return e&&e.__esModule?e:{default:e}}var u=function(t){return(0,r.render)(e.default.createElement(t,null),document.getElementById("react-root"))};u(t.default);
 },{"react":"1n8/","react-dom":"NKHc","./components/Main":"YxD0"}]},{},["Focm"], null)
-//# sourceMappingURL=src.e8a45e26.map
+//# sourceMappingURL=dist/src.e8a45e26.map
