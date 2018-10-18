@@ -9,7 +9,7 @@
   "scripts": {
     "test": "jest",
     "dev": "parcel src/index.html --log-level 3 --open",
-    "build": "parcel build src/index.html --public-url ./"
+    "build": "parcel build src/index.js --public-url ./"
   },
   "author": "Marcus Guthrie",
   "license": "ISC",
