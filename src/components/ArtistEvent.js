@@ -24,10 +24,12 @@ class ArtistEvent extends React.Component {
 
     extractDate(dateTime, dateOrTime) {
         const dateTimeArr = dateTime.split('T');
+        const date = dateTimeArr[0].split('-').reverse().join('-');
+        const time = dateTimeArr[1];
         if (dateOrTime == 'date') {
-            return dateTimeArr[0];
+            return date;
         } else if (dateOrTime == 'time') {
-            return dateTimeArr[1]
+            return time
         }
     }
 

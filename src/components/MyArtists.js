@@ -21,7 +21,6 @@ class MyArtists extends React.Component {
                 }
                 {
                     this.state.myArtistsInfo.map((artist, i) => {
-                        console.log(artist)
                         return <MyArtist
                             key = {i}
                             info = {artist}
