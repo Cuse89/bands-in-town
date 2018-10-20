@@ -23,6 +23,7 @@ class Main extends React.Component {
         this.artistInfoPage = this.artistInfoPage.bind(this);
         this.toggleMobileSearch = this.toggleMobileSearch.bind(this);
         this.handleShowArtistInfo = this.handleShowArtistInfo.bind(this);
+        
     }
 
     componentDidMount() {
@@ -64,30 +65,32 @@ class Main extends React.Component {
         const info = JSON.parse(response);
         switch(infoType) {
             case 'artist':
-                this.sortArtistInfo(info, 'artistInfo');
+                this.setArtistInfo(info, 'artistInfo');
                 break;
             case 'event':
-                this.sortEventInfo(info, 'artistEvents');
+                this.setEventInfo(info, 'artistEvents');
                 break;
             case 'myArtist':
-                this.sortMyArtistsInfo(info)
+                this.setMyArtistsInfo(info)
                 break;
             default:
                 return null
         }        
     }
 
-    sortMyArtistsInfo(info) {
-        this.setState({
-            myArtistsInfo: [...this.state.myArtistsInfo, {
-                name: info.name,
-                thumb: info.thumb_url,
-                eventsCount: info.upcoming_event_count
-            }]
-        });
+    setMyArtistsInfo(info) {
+        // keep order according to localStorage order (unordered because of async)
+        const pos = this.state.myArtists.indexOf(info.name);
+        let infoCopy = [...this.state.myArtistsInfo];
+        infoCopy[pos] = {
+            name: info.name,
+            thumb: info.thumb_url,
+            eventsCount: info.upcoming_event_count
+        };
+        this.setState({myArtistsInfo: infoCopy});
     }
 
-    sortArtistInfo(info) {
+    setArtistInfo(info) {
         this.setState({
             artistInfo: {
                 name: info.name,
@@ -101,7 +104,7 @@ class Main extends React.Component {
         });
     }
 
-    sortEventInfo(infos) {
+    setEventInfo(infos) {
         let events = [];
         infos.map((event) => {
             events.push({
@@ -181,7 +184,7 @@ class Main extends React.Component {
     handleShowArtistInfo(artist) {
         this.startSearch(artist);
         this.artistInfoPage();
-    }      
+    }
 
     render() {
         return (
