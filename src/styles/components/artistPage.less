@@ -1,0 +1,24 @@
+.main-wrapper {
+    display: flex;
+    margin-top: 75px;
+    padding: 10px;
+    @media screen and (max-width: @desktop-breakpoint) {
+        flex-direction: column
+    }
+    .events-wrapper {
+        width: 100%;
+        margin-top: 10px;
+        @media screen and (min-width: @desktop-breakpoint) {
+            float: right;
+            margin-left: 300px;
+            margin-top: -10px;
+        }        
+        a {
+            color: @dark-blue
+        }
+
+        .message {
+            margin-left: 20px;
+        }
+    }
+}
