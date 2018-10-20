@@ -22,9 +22,18 @@
                 margin-left: 40px;
 
                 @media screen and (max-width: @desktop-breakpoint) {
+                    min-width: 80px;
                     width: 80px;
                     height: 80px;
                 }
+
+                @media screen and (max-width: @mobile-breakpoint) {
+                    min-width: 65px;
+                    width: 65px;
+                    height: 65px;
+                }
+
+
             }
         .my-artist-info {
             width: 100%;
