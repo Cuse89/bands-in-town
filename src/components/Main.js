@@ -11,9 +11,11 @@ class Main extends React.Component {
             artistInfo: {},
             artistEvents: [],
             myArtistsInfo: [],
+            // since relying on myArtistsInfo.length in unreliable as indexes could be empty
+            infosAmount: 0,
             myArtists: this.getMyArtists(),
             myArtistsPage: true,
-            artistInfoPage: false
+            artistInfoPage: false,
         }  
 
         this.startSearch = this.startSearch.bind(this);
@@ -22,9 +24,11 @@ class Main extends React.Component {
         this.myArtistsPage = this.myArtistsPage.bind(this);
         this.artistInfoPage = this.artistInfoPage.bind(this);
         this.toggleMobileSearch = this.toggleMobileSearch.bind(this);
-        this.handleShowArtistInfo = this.handleShowArtistInfo.bind(this);
-        
+        this.handleShowArtistInfo = this.handleShowArtistInfo.bind(this); 
+
     }
+
+    
 
     componentDidMount() {
         this.state.myArtists.forEach((artist) => {
@@ -87,7 +91,10 @@ class Main extends React.Component {
             thumb: info.thumb_url,
             eventsCount: info.upcoming_event_count
         };
-        this.setState({myArtistsInfo: infoCopy});
+        this.setState({
+            myArtistsInfo: infoCopy,
+            infosAmount: this.state.infosAmount +1
+        });
     }
 
     setArtistInfo(info) {
@@ -145,7 +152,8 @@ class Main extends React.Component {
      
             this.setState({
                 myArtists: otherArtists,
-                myArtistsInfo: otherArtistsinfo
+                myArtistsInfo: otherArtistsinfo,
+                infosAmount: this.state.infosAmount -1
             });
         }
     }
@@ -196,7 +204,7 @@ class Main extends React.Component {
                     mobileSearch = {this.state.mobileSearch}
                 />
                 {
-                    this.state.myArtistsPage && this.state.myArtistsInfo.length == this.state.myArtists.length &&
+                    this.state.myArtistsPage && this.state.infosAmount == this.state.myArtists.length &&
                     <MyArtists
                         myArtistsInfo = {this.state.myArtistsInfo}
                         handleSubmit = {this.handleShowArtistInfo}
